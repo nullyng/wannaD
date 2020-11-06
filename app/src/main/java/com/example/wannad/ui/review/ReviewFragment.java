@@ -22,7 +22,7 @@ public class ReviewFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         reviewViewModel =
                 ViewModelProviders.of(this).get(ReviewViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_review, container, false);
         final TextView textView = root.findViewById(R.id.text_review);
         reviewViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
