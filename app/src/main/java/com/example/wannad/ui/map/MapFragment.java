@@ -4,32 +4,47 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.wannad.R;
 
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
+
 public class MapFragment  extends Fragment {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_map, container, false);
 
-    private MapViewModel mapViewModel;
+        // 지도
+        MapView mapView = new MapView(getActivity());
+        ViewGroup mapViewContainer = (ViewGroup)v.findViewById(R.id.map_view);
+        mapViewContainer.addView(mapView);
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        mapViewModel =
-                ViewModelProviders.of(this).get(MapViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_map, container, false);
-        final TextView textView = root.findViewById(R.id.text_map);
-        mapViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+        // 중심점 변경 = 예제 좌표는 서울 남산
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.54892296550104,
+                126.99089033876304), true);
+
+        // 줌 레벨 변경
+        mapView.setZoomLevel(4, true);
+
+        // 마커 찍기
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.54892296550104,
+                126.99089033876304);
+        MapPOIItem marker = new MapPOIItem();
+        marker.setItemName("Default Marker");
+        marker.setTag(0);
+        marker.setMapPoint(MARKER_POINT);
+        // 기본으로 제공하는 BluePin 마커 모양
+        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+        // 마커를 클릭했을 때, 기본으로 제공하는 RedPin 마커 모양
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+
+        mapView.addPOIItem(marker);
+
+        return v;
     }
 }
