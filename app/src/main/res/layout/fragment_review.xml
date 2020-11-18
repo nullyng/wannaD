@@ -7,7 +7,7 @@
     tools:context=".ui.map.MapFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="별점을 매겨주세요!"
