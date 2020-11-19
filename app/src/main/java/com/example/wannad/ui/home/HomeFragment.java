@@ -17,22 +17,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.wannad.BottomNavigation;
 import com.example.wannad.R;
+import com.example.wannad.ui.drinks.DrinkFragment;
 
 public class HomeFragment extends Fragment {
     ListView list;
     TextView title;
 
-    private HomeViewModel homeViewModel;
-
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
-        String[] name = {
+        final String[] name = {
                 "STARBUCKS",
                 "EDIYA",
                 "A TWOSOME PLACE",
@@ -41,12 +42,10 @@ public class HomeFragment extends Fragment {
                 "Name2"
         };
 
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
        list = (ListView) root.findViewById(R.id.cafe_menu);
-       title = (TextView) root.findViewById(R.id.title);
+       //title = (TextView) root.findViewById(R.id.title);
         final ViewGroup tempcont = container;
 /*
        title.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +63,15 @@ public class HomeFragment extends Fragment {
        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            @Override
            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               Toast.makeText(tempcont.getContext(), "press", Toast.LENGTH_SHORT).show();
+               Toast.makeText(tempcont.getContext(), "press"+i, Toast.LENGTH_SHORT).show();
+               Fragment fragment =HomeDrinks.newinstance();
+               Bundle bundle = new Bundle(1);
+               bundle.putString("name",name[i]);
+               fragment.setArguments(bundle);
+               ((BottomNavigation)getActivity()).replaceFragment(R.layout.fragment_home,fragment);
            }
        });
+
        return root;
     }
 }
