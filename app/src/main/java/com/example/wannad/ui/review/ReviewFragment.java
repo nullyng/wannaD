@@ -46,9 +46,11 @@ public class ReviewFragment extends Fragment {
         });
         spinner = root.findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        adapter.add("test1");
-        adapter.add("test2");
+        adapter.add("아메리카노");
+        adapter.add("아이스티");
+        adapter.add("아이스초코");
         return root;
 
 

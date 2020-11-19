@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="fragmenta">
+    <string-array name="array">
         <item>아이템0</item>
         <item>아이템1</item>
         <item>아이템2</item>
