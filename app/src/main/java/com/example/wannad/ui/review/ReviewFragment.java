@@ -30,31 +30,34 @@ import com.example.wannad.R;
 
 public class ReviewFragment extends Fragment {
     Spinner spinner;
-    private ReviewViewModel reviewViewModel;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        reviewViewModel =
-                ViewModelProviders.of(this).get(ReviewViewModel.class);
         View root = inflater.inflate(R.layout.fragment_review, container, false);
         final RatingBar ratingBar = (RatingBar) root.findViewById(R.id.ratingbar);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener(){
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 Toast.makeText(getActivity(),
-                        "New Rating: " + rating, Toast.LENGTH_SHORT).show();
+                        "감사합니다!", Toast.LENGTH_SHORT).show();
             }
         });
+        String[] drinks = {
+                "아메리카노",
+                "카페라떼",
+                "아인슈페너",
+                "초코라떼",
+                "딸기라떼",
+                "피치우롱",
+                "얼그레이"
+        };
+
         spinner = root.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, drinks);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        adapter.add("아메리카노");
-        adapter.add("아이스티");
-        adapter.add("아이스초코");
+
+
         return root;
-
-
     }
-
 
 }
