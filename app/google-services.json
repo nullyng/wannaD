@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "570139009333",
+    "project_id": "wannad-33960",
+    "storage_bucket": "wannad-33960.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570139009333:android:5faccdb12f8967214aac7c",
+        "android_client_info": {
+          "package_name": "com.example.wannad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570139009333-culnqae09pjvg1liti8o191r219n6gtp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wannad",
+            "certificate_hash": "494819e561b920ad6fb457fe697d939ef4ebc49d"
+          }
+        },
+        {
+          "client_id": "570139009333-9dm8ahh3mh2ipt8p4ue5ccu828cedm5a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZiC1XB78dNCHN6cloM80P9vqhdniBB9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570139009333-9dm8ahh3mh2ipt8p4ue5ccu828cedm5a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
