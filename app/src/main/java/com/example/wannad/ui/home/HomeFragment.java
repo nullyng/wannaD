@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
                Bundle bundle = new Bundle(1);
                bundle.putString("name",name[i]);
                fragment.setArguments(bundle);
-               ((BottomNavigation)getActivity()).replaceFragment(R.layout.fragment_home,fragment);
+               ((BottomNavigation)getActivity()).replaceFragment(fragment);
            }
        });
 

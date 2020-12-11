@@ -4,39 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.map.MapFragment">
+    android:background="#F1F1F1"
+    tools:context=".ui.review.ReviewFragment">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/menuchoicelayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="별점을 매겨주세요!"
-        android:textStyle="bold"
+        android:background="#ffffff"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.06"
-        tools:ignore="MissingConstraints" />
-
-    <RatingBar
-        android:id="@+id/ratingbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:numStars="5"
-        android:stepSize="0.5"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.1"/>
-
+        app:layout_constraintBottom_toTopOf="@id/ratingbarlayout"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="236dp"
+        android:layout_gravity="center"
         android:text="어떤 메뉴를 드셨나요?"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -50,36 +36,64 @@
         style="@style/Widget.AppCompat.Spinner.Underlined"
         android:id="@+id/spinner"
         android:entries = "@array/array"
-        android:layout_width="250dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0.3"
+        tools:ignore="MissingConstraints" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ratingbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuchoicelayout"
+        app:layout_constraintBottom_toTopOf="@id/revieweditlayout"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="별점을 매겨주세요!"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            app:layout_constraintVertical_bias="0.06"
+            tools:ignore="MissingConstraints" />
+        <RatingBar
+            android:id="@+id/ratingbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:layout_gravity="center"
+            app:layout_constraintVertical_bias="0.1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/revieweditlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.3"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:autoSizeTextType="uniform"
-        tools:ignore="MissingConstraints"/>
-
+        android:orientation="vertical">
     <EditText
         android:id="@+id/writeReview"
-        android:layout_width="300dp"
-        android:layout_height="150dp"
-        android:background="@color/textBackground"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="#ffffff"
         android:ems="10"
         android:gravity="center"
         android:hint="후기를 작성해주세요"
         android:inputType="text"
         android:privateImeOptions="defaultInputmode=korean"
-        android:textColorHint="#969696"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center"
         app:layout_constraintVertical_bias="0.53"
         tools:ignore="MissingConstraints" />
 
@@ -88,16 +102,14 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
         android:text="사진 추가"
         android:textSize="15dp"
         android:textColor="#ffffff"
         android:background="@color/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@+id/writeReview"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.83"
+        android:layout_gravity="right"
         tools:ignore="MissingConstraints" />
-
+    </LinearLayout>
     <Button
         android:id="@+id/sendReview"
         android:layout_width="match_parent"

@@ -42,8 +42,16 @@ public class BottomNavigation extends AppCompatActivity {
         mDatabase.child("users").setValue("Kim");
     }
 
-    public void replaceFragment(int i, Fragment fragment){
+    public void replaceFragment( Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.nav_host_fragment,fragment).commit();
+    }
+
+    public void replacePopFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.replace(R.id.nav_host_fragment,fragment).commit();

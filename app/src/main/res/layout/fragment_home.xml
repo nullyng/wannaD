@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.5"
-        android:background="#FFE2B1"
+        android:background="#FBE5C1"
         app:layout_constraintHorizontal_bias="1.0">
 
         <ListView

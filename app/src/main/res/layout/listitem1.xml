@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="90dp"
-    android:background="#FFE2B1">
+    android:background="#FBE5C1">
 
     <ImageView
         android:id="@+id/cafe_icon"
