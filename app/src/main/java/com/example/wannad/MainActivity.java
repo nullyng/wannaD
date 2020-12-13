@@ -68,13 +68,22 @@ public class MainActivity extends Activity {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         Log.v("result",object.toString());
+                        Intent intent = new Intent(getApplicationContext(), BottomNavigation.class);
+                        intent.putExtra("name", getIntent().getStringExtra("username"));
+                        intent.putExtra("profile", getIntent().getStringExtra("getProfileImagePath"));
+                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        finish();
                     }
                 });
+
 
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,name,email,gender,birthday");
                 graphRequest.setParameters(parameters);
                 graphRequest.executeAsync();
+
+
             }
 
             @Override
