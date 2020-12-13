@@ -1,7 +1,11 @@
 package com.example.wannad;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.media.MediaSession2;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +38,8 @@ import com.kakao.util.helper.log.Logger;
 
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class MainActivity extends Activity {
