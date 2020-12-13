@@ -1,35 +1,24 @@
 package com.example.wannad.ui.review;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RatingBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.example.wannad.BottomNavigation;
-import com.example.wannad.MainActivity;
 import com.example.wannad.R;
+import com.google.firebase.database.DatabaseReference;
 
 public class ReviewFragment extends Fragment {
     Spinner spinner;
+    DatabaseReference mDatabase;
+    //DatabaseReference mDatabase;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_review, container, false);

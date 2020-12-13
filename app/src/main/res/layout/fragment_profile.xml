@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/confirm_heart"/>
 
     <TextView
-        android:id="@+id/confirm_review"
+        android:id="@+id/logout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
