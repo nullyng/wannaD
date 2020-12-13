@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -41,10 +44,13 @@ public class BottomNavigation extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").setValue("Kim");
+
+
         Intent intent = getIntent();
         strNickname = intent.getStringExtra("name");
         strProfile = intent.getStringExtra("profile");
+        mDatabase.child("user").setValue(strNickname);
+
 
     }
 

@@ -9,9 +9,13 @@ import android.content.pm.Signature;
 import android.media.MediaSession2;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.wannad.ui.profile.ProfileFragment;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -31,8 +35,11 @@ import com.kakao.auth.KakaoSDK;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.response.MeV2Response;
+import com.kakao.usermgmt.response.model.Profile;
+import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 
@@ -58,6 +65,13 @@ public class MainActivity extends Activity {
         Session.getCurrentSession().addCallback(callback);
         //Session.getCurrentSession().checkAndImplicitOpen(); //자동로그인
 
+        Button logout_btn = findViewById(R.id.btn_logout);
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickLogout();
+            }
+        });
 
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
@@ -76,7 +90,6 @@ public class MainActivity extends Activity {
                         finish();
                     }
                 });
-
 
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,name,email,gender,birthday");
@@ -97,6 +110,19 @@ public class MainActivity extends Activity {
             }
         });
 
+    }
+    private void onClickLogout() {
+        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+            @Override
+            public void onCompleteLogout() {
+                redirectLoginActivity();
+            }
+        });
+    }
+    private void redirectLoginActivity() {
+        final Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -138,10 +164,13 @@ public class MainActivity extends Activity {
 
                 @Override
                 public void onSuccess(MeV2Response result) {
+                    UserAccount kakaoAccount = result.getKakaoAccount();
+                    Profile profile = kakaoAccount.getProfile();
+                    //Toast.makeText(MainActivity.this, profile.getNickname(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), BottomNavigation.class);
-                    intent.putExtra("name", result.getNickname());
-                    intent.putExtra("profile", result.getProfileImagePath());
-                    Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    intent.putExtra("name", profile.getNickname());
+                    intent.putExtra("profile", profile.getThumbnailImageUrl());
+                    //Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                     finish();
                 }
