@@ -16,7 +16,7 @@ import com.example.wannad.R;
 import com.google.firebase.database.DatabaseReference;
 
 public class ReviewFragment extends Fragment {
-    Spinner spinner;
+    Spinner spinnerd, spinnerc;
     DatabaseReference mDatabase;
     //DatabaseReference mDatabase;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -39,12 +39,22 @@ public class ReviewFragment extends Fragment {
                 "피치우롱",
                 "얼그레이"
         };
+        String[] cafes = {
+                "스타벅스",
+                "이디야",
+                "투썸플레이스",
+                "할리스"
+        };
 
-        spinner = root.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, drinks);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        spinnerd = root.findViewById(R.id.spinnerdrink);
+        ArrayAdapter<String> adapterd = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, drinks);
+        adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerd.setAdapter(adapterd);
 
+        spinnerc = root.findViewById(R.id.spinnercafe);
+        ArrayAdapter<String> adapterc = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, cafes);
+        adapterc.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerc.setAdapter(adapterc);
 
         return root;
     }
