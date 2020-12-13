@@ -7,53 +7,64 @@
     android:background="#F1F1F1"
     tools:context=".ui.review.ReviewFragment">
 
-
     <LinearLayout
         android:id="@+id/menuchoicelayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
+        android:paddingTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/ratingbarlayout"
         android:orientation="vertical">
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="어떤 메뉴를 드셨나요?"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.4"
-        tools:ignore="MissingConstraints" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/context_border">
+         <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="어느 카페에서 드셨나요?"
+            android:textStyle="bold"
+            app:layout_constraintVertical_bias="0.4"
+            />
 
+            <Spinner
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:id="@+id/spinnercafe"
+                android:entries = "@array/array"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintVertical_bias="0.3"
+                tools:ignore="MissingConstraints" />
+            </LinearLayout>
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:text="어떤 메뉴를 드셨나요?"
+            android:textStyle="bold"
+            app:layout_constraintVertical_bias="0.4"
+             />
     <Spinner
         style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerdrink"
         android:entries = "@array/array"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintVertical_bias="0.3"
         tools:ignore="MissingConstraints" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ratingbarlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#ffffff"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/menuchoicelayout"
-        app:layout_constraintBottom_toTopOf="@id/revieweditlayout"
-        android:orientation="vertical">
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -61,41 +72,32 @@
             android:text="별점을 매겨주세요!"
             android:textStyle="bold"
             android:layout_gravity="center"
-            app:layout_constraintVertical_bias="0.06"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginTop="10dp"
+             />
         <RatingBar
             android:id="@+id/ratingbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?android:ratingBarStyleIndicator"
+            android:layout_marginTop="10dp"
             android:numStars="5"
             android:stepSize="0.5"
             android:layout_gravity="center"
             app:layout_constraintVertical_bias="0.1"/>
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/revieweditlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="vertical">
-    <EditText
-        android:id="@+id/writeReview"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="#ffffff"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="후기를 작성해주세요"
-        android:inputType="text"
-        android:privateImeOptions="defaultInputmode=korean"
-        android:layout_gravity="center"
-        app:layout_constraintVertical_bias="0.53"
-        tools:ignore="MissingConstraints" />
+        <EditText
+            android:id="@+id/writeReview"
+            android:layout_width="match_parent"
+            android:layout_height="310dp"
+            android:layout_gravity="center"
+            android:background="#ffffff"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="후기를 작성해주세요"
+            android:inputType="text"
+            android:privateImeOptions="defaultInputmode=korean"
+            app:layout_constraintVertical_bias="0.53"
+            tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/picturePick"
