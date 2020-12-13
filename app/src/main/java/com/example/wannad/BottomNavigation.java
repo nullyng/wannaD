@@ -1,6 +1,7 @@
 package com.example.wannad;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +24,7 @@ import androidx.navigation.ui.NavigationUI;
 
 public class BottomNavigation extends AppCompatActivity {
     DatabaseReference mDatabase;
+    String strNickname, strProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,10 @@ public class BottomNavigation extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").setValue("Kim");
+        Intent intent = getIntent();
+        strNickname = intent.getStringExtra("name");
+        strProfile = intent.getStringExtra("profile");
+
     }
 
     public void replaceFragment( Fragment fragment){
