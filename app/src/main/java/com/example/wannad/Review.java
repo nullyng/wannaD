@@ -36,6 +36,8 @@ public class Review {
         return context;
     }
 
+    public String getTime(){return time;}
+
     public float getStar(){
         return star;
     }

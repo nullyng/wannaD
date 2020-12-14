@@ -128,7 +128,8 @@ public class ReviewListFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 for(DataSnapshot rsnapshot : snapshot.getChildren()){
                     Review temp = new Review(rsnapshot.child("name").getValue().toString(),
-                            rsnapshot.child("context").toString(),Float.valueOf(rsnapshot.child("star").getValue().toString()));
+                            rsnapshot.child("context").getValue().toString(),
+                            Float.valueOf(rsnapshot.child("star").getValue().toString()),rsnapshot.child("time").getValue().toString());
 
                     Toast.makeText(getActivity(), temp.getName(), Toast.LENGTH_SHORT).show();
                     review[i++] = temp;
