@@ -51,6 +51,7 @@ public class HomeFragment extends Fragment {
                 "Tom N Toms",
         };
 
+<<<<<<< HEAD
         final String[] cafe_logo = {
                 "R.drawable.starbucks",
                 "R.drawable.ediya",
@@ -59,6 +60,16 @@ public class HomeFragment extends Fragment {
                 "R.drawable.coffeebean",
                 "R.drawable.pascucci",
                 "R.drawable.tomntoms",
+=======
+        final int[] cafe_logo = {
+                R.drawable.starbucks,
+                R.drawable.ediya,
+                R.drawable.twosomeplace,
+                R.drawable.hollys,
+                R.drawable.coffeebean,
+                R.drawable.pascucci,
+                R.drawable.tomntoms,
+>>>>>>> a63f15a859469735f2c4eb085db1513a9d869ad0
         };
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -75,7 +86,7 @@ public class HomeFragment extends Fragment {
 
  */
        CafeAdapter adapter = new CafeAdapter
-               (inflater.getContext(),R.layout.listitem1,name);
+               (inflater.getContext(),R.layout.listitem1,name,cafe_logo);
        list.setAdapter(adapter);
 
        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,12 +108,14 @@ class CafeAdapter extends BaseAdapter{
     Context context;
     int layout;
     String[] name;
+    int[] logo;
     LayoutInflater inflater;
 
-    public CafeAdapter(Context context, int layout,String[] name){
+    public CafeAdapter(Context context, int layout,String[] name, int[] logo){
         this.context = context;
         this.layout = layout;
         this.name = name;
+        this.logo = logo;
         inflater =(LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -132,7 +145,7 @@ class CafeAdapter extends BaseAdapter{
        ImageView iconImage = (ImageView) view.findViewById(R.id.cafe_icon);
        TextView cafeName = (TextView) view.findViewById(R.id.cafe_name);
 
-       iconImage.setImageResource(R.drawable.starbucks);
+       iconImage.setImageResource(logo[position]);
        cafeName.setText(name[position]);
 
 
