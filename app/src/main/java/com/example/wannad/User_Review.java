@@ -5,14 +5,16 @@ import com.google.firebase.database.Exclude;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Review {
-    String name;
+public class User_Review {
+    String cname;
+    String dname;
     String context;
     float star;
     String time;
 
-    public Review(String name, String context, float star, String time){
-        this.name = name;
+    public User_Review(String cname, String dname, String context, float star, String time){
+        this.cname = cname;
+        this.dname = dname;
         this.context = context;
         this.star = star;
         this.time = time;
@@ -21,10 +23,12 @@ public class Review {
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
-        result.put("name",name);
+        result.put("cname",cname);
+        result.put("dname",dname);
         result.put("star",star);
         result.put("context",context);
         result.put("time",time);
         return result;
     }
 }
+
