@@ -17,25 +17,27 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.wannad.R;
+import com.example.wannad.Review;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ReviewListFragment extends Fragment {
     ListView list;
     TextView cName, dName;
-    String ckey, dkey;
+    String ckey, dkey, context;
     RatingBar ratingBar, ratingBarAvg;
     TextView reviewCnt;
+    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    Review[] review;
     int cnt;
     float sum = 0, avg = 0;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        String[] review = {
-                "맛있어요~~",
-                "향긋한 향~~~최고!!",
-                "맛없어서 깜짝 놀랐어요ㅠㅠ ",
-                "굿굿 쫀맛"
-        };
-
+        String[] temp = new String[0];
         View root = inflater.inflate(R.layout.fragment_reviewlist, container, false);
         list = root.findViewById(R.id.reviewList);
         cName = root.findViewById(R.id.review_cafe);
@@ -49,7 +51,7 @@ public class ReviewListFragment extends Fragment {
 
         cName.setText(ckey);
         dName.setText(dkey);
-        ReviewAdapter adapter = new ReviewAdapter(inflater.getContext(),R.layout.review_list,review);
+        ReviewAdapter adapter = new ReviewAdapter(inflater.getContext(),R.layout.review_list,temp);
         list.setAdapter(adapter);
 
         return root;
@@ -100,5 +102,24 @@ public class ReviewListFragment extends Fragment {
 
             return view;
         }
+    }
+
+    public void review_read(){
+        DatabaseReference childreference = mDatabase.child(ckey).child(dkey);
+
+        childreference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot reviewsnapshot : snapshot.getChildren())
+                {
+                    
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
