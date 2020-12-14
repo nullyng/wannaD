@@ -61,6 +61,7 @@ public class MainActivity extends Activity {
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), BottomNavigation.class);
+                        intent.putExtra("userId", String.valueOf(Profile.getCurrentProfile().getId()));
                         intent.putExtra("name", String.valueOf(Profile.getCurrentProfile().getName()));
                         intent.putExtra("profile", String.valueOf(Profile.getCurrentProfile().getProfilePictureUri(200, 200)));
                         //Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
