@@ -8,42 +8,27 @@ import androidx.fragment.app.Fragment;
 
 import com.example.wannad.R;
 
-import net.daum.mf.map.api.MapPOIItem;
-import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
 public class MapFragment  extends Fragment {
+    String id;
+    String lon, lat;
+    String place_name;
+    String key = "a9cbc40f5f92bebee9c7bf20723d3b2a";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_map, container, false);
 
-        // 지도
+        // 지도 객체 생성
         MapView mapView = new MapView(getActivity());
         ViewGroup mapViewContainer = (ViewGroup)v.findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
-        // 중심점 변경 = 예제 좌표는 서울 남산
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.54892296550104,
-                126.99089033876304), true);
-
-        // 줌 레벨 변경
-        mapView.setZoomLevel(4, true);
-
-        // 마커 찍기
-        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.54892296550104,
-                126.99089033876304);
-        MapPOIItem marker = new MapPOIItem();
-        marker.setItemName("Default Marker");
-        marker.setTag(0);
-        marker.setMapPoint(MARKER_POINT);
-        // 기본으로 제공하는 BluePin 마커 모양
-        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-        // 마커를 클릭했을 때, 기본으로 제공하는 RedPin 마커 모양
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-
-        mapView.addPOIItem(marker);
+        // 현위치 트래킹 모드 설정
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
         return v;
     }
