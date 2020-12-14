@@ -51,16 +51,6 @@ public class HomeFragment extends Fragment {
                 "Tom N Toms",
         };
 
-<<<<<<< HEAD
-        final String[] cafe_logo = {
-                "R.drawable.starbucks",
-                "R.drawable.ediya",
-                "R.drawable.twosomeplace",
-                "R.drawable.hollys",
-                "R.drawable.coffeebean",
-                "R.drawable.pascucci",
-                "R.drawable.tomntoms",
-=======
         final int[] cafe_logo = {
                 R.drawable.starbucks,
                 R.drawable.ediya,
@@ -69,12 +59,12 @@ public class HomeFragment extends Fragment {
                 R.drawable.coffeebean,
                 R.drawable.pascucci,
                 R.drawable.tomntoms,
->>>>>>> a63f15a859469735f2c4eb085db1513a9d869ad0
         };
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-       list = (ListView) root.findViewById(R.id.cafe_menu);
-       //title = (TextView) root.findViewById(R.id.title);
+        list = (ListView) root.findViewById(R.id.cafe_menu);
+        //title = (TextView) root.findViewById(R.id.title);
         final ViewGroup tempcont = container;
 /*
        title.setOnClickListener(new View.OnClickListener() {
@@ -83,25 +73,24 @@ public class HomeFragment extends Fragment {
                Toast.makeText(getActivity(), "press", Toast.LENGTH_SHORT).show();
            }
        });
-
  */
-       CafeAdapter adapter = new CafeAdapter
-               (inflater.getContext(),R.layout.listitem1,name,cafe_logo);
-       list.setAdapter(adapter);
+        CafeAdapter adapter = new CafeAdapter
+                (inflater.getContext(),R.layout.listitem1,name,cafe_logo);
+        list.setAdapter(adapter);
 
-       list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               Toast.makeText(tempcont.getContext(), "press"+i, Toast.LENGTH_SHORT).show();
-               Fragment fragment = HomeDrinks.newinstance();
-               Bundle bundle = new Bundle(1);
-               bundle.putString("name",name[i]);
-               fragment.setArguments(bundle);
-               ((BottomNavigation)getActivity()).replaceFragment(fragment);
-           }
-       });
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(tempcont.getContext(), "press"+i, Toast.LENGTH_SHORT).show();
+                Fragment fragment = HomeDrinks.newinstance();
+                Bundle bundle = new Bundle(1);
+                bundle.putString("name",name[i]);
+                fragment.setArguments(bundle);
+                ((BottomNavigation)getActivity()).replaceFragment(fragment);
+            }
+        });
 
-       return root;
+        return root;
     }
 }
 class CafeAdapter extends BaseAdapter{
@@ -138,15 +127,15 @@ class CafeAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
 
-       if(view == null){
-           view = inflater.inflate(layout,null);
-       }
+        if(view == null){
+            view = inflater.inflate(layout,null);
+        }
 
-       ImageView iconImage = (ImageView) view.findViewById(R.id.cafe_icon);
-       TextView cafeName = (TextView) view.findViewById(R.id.cafe_name);
+        ImageView iconImage = (ImageView) view.findViewById(R.id.cafe_icon);
+        TextView cafeName = (TextView) view.findViewById(R.id.cafe_name);
 
-       iconImage.setImageResource(logo[position]);
-       cafeName.setText(name[position]);
+        iconImage.setImageResource(logo[position]);
+        cafeName.setText(name[position]);
 
 
         return view;
