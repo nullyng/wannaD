@@ -33,12 +33,6 @@ public class HomeFragment extends Fragment {
     ListView list;
     TextView title;
 
-    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference starbucks = database.child("starbucks");
-    DatabaseReference ediya = database.child("ediya");
-    DatabaseReference twosome = database.child("twosome");
-    DatabaseReference hollys = database.child("hollys");
-
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
         final String[] name = {
@@ -66,14 +60,7 @@ public class HomeFragment extends Fragment {
         list = (ListView) root.findViewById(R.id.cafe_menu);
         //title = (TextView) root.findViewById(R.id.title);
         final ViewGroup tempcont = container;
-/*
-       title.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               Toast.makeText(getActivity(), "press", Toast.LENGTH_SHORT).show();
-           }
-       });
- */
+
         CafeAdapter adapter = new CafeAdapter
                 (inflater.getContext(),R.layout.listitem1,name,cafe_logo);
         list.setAdapter(adapter);

@@ -25,4 +25,16 @@ public class Review {
 
         return result;
     }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getContext(){
+        return context;
+    }
+
+    public float getStar(){
+        return star;
+    }
 }
