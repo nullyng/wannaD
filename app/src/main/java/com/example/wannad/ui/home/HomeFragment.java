@@ -26,10 +26,18 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.wannad.BottomNavigation;
 import com.example.wannad.R;
 import com.example.wannad.ui.drinks.DrinkFragment;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeFragment extends Fragment {
     ListView list;
     TextView title;
+
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference starbucks = database.child("starbucks");
+    DatabaseReference ediya = database.child("ediya");
+    DatabaseReference twosome = database.child("twosome");
+    DatabaseReference hollys = database.child("hollys");
 
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
