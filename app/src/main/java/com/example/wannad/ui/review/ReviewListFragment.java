@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ public class ReviewListFragment extends Fragment {
     ListView list;
     TextView cName, dName;
     String ckey, dkey;
+    RatingBar ratingBar, ratingBarAvg;
+    TextView reviewCnt;
     int cnt;
     float sum = 0, avg = 0;
     @Nullable
@@ -39,6 +42,10 @@ public class ReviewListFragment extends Fragment {
         dName = root.findViewById(R.id.review_drink);
         ckey = getArguments().getString("cname");
         dkey = getArguments().getString("dname");
+
+        ratingBar = root.findViewById(R.id.reviewRating);
+        reviewCnt = root.findViewById(R.id.reviewCnt);
+        ratingBarAvg = root.findViewById(R.id.reviewRatingAvg);
 
         cName.setText(ckey);
         dName.setText(dkey);
