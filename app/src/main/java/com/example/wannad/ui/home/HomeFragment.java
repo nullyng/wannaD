@@ -46,10 +46,20 @@ public class HomeFragment extends Fragment {
                 "EDIYA",
                 "A TWOSOME PLACE",
                 "HOLLYS COFFE",
-                "Name",
-                "Name2"
+                "COFFEE BEAN",
+                "PASCUCCI",
+                "Tom N Toms",
         };
 
+        final String[] cafe_logo = {
+                "R.drawable.starbucks",
+                "R.drawable.ediya",
+                "R.drawable.Twosomeplace",
+                "R.drawable.Hollys",
+                "R.drawable.Coffeebean",
+                "R.drawable.Pascucci",
+                "R.drawable.TomNToms",
+        };
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
        list = (ListView) root.findViewById(R.id.cafe_menu);
@@ -72,7 +82,7 @@ public class HomeFragment extends Fragment {
            @Override
            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                Toast.makeText(tempcont.getContext(), "press"+i, Toast.LENGTH_SHORT).show();
-               Fragment fragment =HomeDrinks.newinstance();
+               Fragment fragment = HomeDrinks.newinstance();
                Bundle bundle = new Bundle(1);
                bundle.putString("name",name[i]);
                fragment.setArguments(bundle);
