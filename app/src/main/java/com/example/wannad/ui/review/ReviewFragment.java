@@ -88,6 +88,7 @@ public class ReviewFragment extends Fragment {
                  Map<String, Object> childUpdates = new HashMap<>();
                  String random = getRandomString();
                  childUpdates.put("/Review/"+cname+"/"+dname+"/review"+random,postValues);
+                 childUpdates.put("/User/" +username+"/"+"/review"+random,postValues);
                  mDatabase.updateChildren(childUpdates);
              }
          });
