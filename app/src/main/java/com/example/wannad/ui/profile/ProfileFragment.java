@@ -25,17 +25,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragment extends Fragment {
-    private String userName = "김주영";
-    private String name = null, profile;
+    public static String name = null, profile = null;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("user");
-    //private ValueEventListener postListener;
 
-    public void read_profile() {
+    public void read_profile(String name, String profile) {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                name = dataSnapshot.getValue().toString();
-                //Toast.makeText((BottomNavigation)getActivity(), name, Toast.LENGTH_SHORT).show();
+                ProfileFragment.this.name = dataSnapshot.getValue().toString();
+                //ProfileFragment.this.profile = dataSnapshot.getValue().
             }
 
             @Override
@@ -45,10 +43,10 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        read_profile();
-    }
+    //public void onStart() {
+        //super.onStart();
+        //read_profile();
+    //}
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +54,7 @@ public class ProfileFragment extends Fragment {
         final TextView textView = root.findViewById(R.id.welcome);
         if(name==null)
         {
-            read_profile();
+            read_profile(name, profile);
         }
         textView.setText(name + "님, 환영합니다.");
         return root;
