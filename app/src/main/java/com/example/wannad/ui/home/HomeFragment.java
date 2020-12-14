@@ -51,16 +51,6 @@ public class HomeFragment extends Fragment {
                 "Tom N Toms",
         };
 
-<<<<<<< HEAD
-        final String[] cafe_logo = {
-                "R.drawable.starbucks",
-                "R.drawable.ediya",
-                "R.drawable.twosomeplace",
-                "R.drawable.hollys",
-                "R.drawable.coffeebean",
-                "R.drawable.pascucci",
-                "R.drawable.tomntoms",
-=======
         final int[] cafe_logo = {
                 R.drawable.starbucks,
                 R.drawable.ediya,
@@ -69,8 +59,8 @@ public class HomeFragment extends Fragment {
                 R.drawable.coffeebean,
                 R.drawable.pascucci,
                 R.drawable.tomntoms,
->>>>>>> a63f15a859469735f2c4eb085db1513a9d869ad0
         };
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
        list = (ListView) root.findViewById(R.id.cafe_menu);
