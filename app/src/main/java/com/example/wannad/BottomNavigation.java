@@ -27,7 +27,7 @@ import androidx.navigation.ui.NavigationUI;
 
 public class BottomNavigation extends AppCompatActivity {
     DatabaseReference mDatabase;
-    String strNickname, strProfile;
+    String strId, strNickname, strProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,12 @@ public class BottomNavigation extends AppCompatActivity {
 
 
         Intent intent = getIntent();
+        strId = intent.getStringExtra("userId");
         strNickname = intent.getStringExtra("name");
         strProfile = intent.getStringExtra("profile");
-        mDatabase.child("user").child("name").setValue(strNickname);
-        mDatabase.child("user").child("profile").setValue(strProfile);
+        mDatabase.setValue(strId);
+        mDatabase.child("strId").child("user").child("name").setValue(strNickname);
+        mDatabase.child("strId").child("user").child("profile").setValue(strProfile);
 
 
     }
