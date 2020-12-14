@@ -16,9 +16,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BottomNavigation extends AppCompatActivity {
     DatabaseReference mDatabase;
     String strId, strNickname, strProfile;
+    User temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +45,12 @@ public class BottomNavigation extends AppCompatActivity {
         strId = intent.getStringExtra("userId");
         strNickname = intent.getStringExtra("name");
         strProfile = intent.getStringExtra("profile");
-        mDatabase.setValue(strId);
-        mDatabase.child(strId).child("user").child("name").push().setValue(strNickname);
-        mDatabase.child(strId).child("user").child("profile").push().setValue(strProfile);
 
-
+        temp = new User(strNickname, strProfile);
+        Map<String, Object> postValues = temp.toMap();
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/User/"+strNickname,postValues);
+        mDatabase.updateChildren(childUpdates);
     }
 
     public void replaceFragment( Fragment fragment){
