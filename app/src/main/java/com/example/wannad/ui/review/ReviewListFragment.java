@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.wannad.R;
 import com.example.wannad.Review;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,22 +38,22 @@ public class ReviewListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        String[] temp = new String[0];
         View root = inflater.inflate(R.layout.fragment_reviewlist, container, false);
+
         list = root.findViewById(R.id.reviewList);
         cName = root.findViewById(R.id.review_cafe);
         dName = root.findViewById(R.id.review_drink);
         ckey = getArguments().getString("cname");
         dkey = getArguments().getString("dname");
-
+        review_read();
         ratingBar = root.findViewById(R.id.reviewRating);
         reviewCnt = root.findViewById(R.id.reviewCnt);
         ratingBarAvg = root.findViewById(R.id.reviewRatingAvg);
 
         cName.setText(ckey);
         dName.setText(dkey);
-        ReviewAdapter adapter = new ReviewAdapter(inflater.getContext(),R.layout.review_list,temp);
-        list.setAdapter(adapter);
+       // ReviewAdapter adapter = new ReviewAdapter(inflater.getContext(),R.layout.review_list,review);
+        //list.setAdapter(adapter);
 
         return root;
     }
@@ -60,13 +61,17 @@ public class ReviewListFragment extends Fragment {
     class ReviewAdapter extends BaseAdapter {
         Context context;
         int layout;
-        String[] review;
+        Review[] review;
         LayoutInflater inflater;
 
-        public ReviewAdapter(Context context, int layout, String[] review) {
+        public ReviewAdapter(Context context, int layout, Review[] review) {
             this.context = context;
             this.layout = layout;
             this.review = review;
+            if(review == null){
+                Toast.makeText(context, "null", Toast.LENGTH_SHORT).show();
+                return;
+            }
             inflater = (LayoutInflater) context.getSystemService
                     (Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -95,25 +100,55 @@ public class ReviewListFragment extends Fragment {
 
             ImageView iconImage = (ImageView) view.findViewById(R.id.review_image);
             TextView review_context = (TextView) view.findViewById(R.id.review_context);
+            TextView review_name = view.findViewById(R.id.review_name);
+            RatingBar ratingBar = view.findViewById(R.id.reviewRating);
 
             iconImage.setImageResource(R.drawable.starbucks);
-            review_context.setText(review[position]);
-
+            review_context.setText(review[position].getContext());
+            review_name.setText(review[position].getName());
+            ratingBar.setRating(review[position].getStar());
 
             return view;
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        //review_read();
+    }
+
     public void review_read(){
+        Toast.makeText(getActivity(), "db read", Toast.LENGTH_SHORT).show();
         DatabaseReference childreference = mDatabase.child(ckey).child(dkey);
 
-        childreference.addValueEventListener(new ValueEventListener() {
+        childreference.addChildEventListener(new ChildEventListener() {
+            int i = 0;
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot reviewsnapshot : snapshot.getChildren())
-                {
-                    
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                for(DataSnapshot rsnapshot : snapshot.getChildren()){
+                    Review temp = new Review(rsnapshot.child("name").getValue().toString(),
+                            rsnapshot.child("context").toString(),Float.valueOf(rsnapshot.child("star").getValue().toString()));
+
+                    Toast.makeText(getActivity(), temp.getName(), Toast.LENGTH_SHORT).show();
+                    review[i++] = temp;
                 }
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override

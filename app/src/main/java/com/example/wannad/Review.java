@@ -27,4 +27,16 @@ public class Review {
         result.put("time",time);
         return result;
     }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getContext(){
+        return context;
+    }
+
+    public float getStar(){
+        return star;
+    }
 }
