@@ -1,59 +1,40 @@
 package com.example.wannad;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.media.MediaSession2;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.wannad.ui.profile.ProfileFragment;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.kakao.auth.ApiErrorCode;
-import com.kakao.auth.ApprovalType;
-import com.kakao.auth.AuthType;
-import com.kakao.auth.IApplicationConfig;
 import com.kakao.auth.ISessionCallback;
-import com.kakao.auth.ISessionConfig;
-import com.kakao.auth.KakaoAdapter;
-import com.kakao.auth.KakaoSDK;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.response.MeV2Response;
-import com.kakao.usermgmt.response.model.Profile;
 import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.exception.KakaoException;
-import com.kakao.util.helper.log.Logger;
 
 import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class MainActivity extends Activity {
 
     private CallbackManager callbackManager;
     private SessionCallback callback;
+    DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,28 +46,24 @@ public class MainActivity extends Activity {
         callback = new SessionCallback();                  // 이 두개의 함수 중요함
         Session.getCurrentSession().addCallback(callback);
         //Session.getCurrentSession().checkAndImplicitOpen(); //자동로그인
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        Button logout_btn = findViewById(R.id.btn_logout);
-        logout_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickLogout();
-            }
-        });
+
+
 
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(final LoginResult loginResult) {
                 GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.v("result",object.toString());
-                        Intent intent = new Intent(getApplicationContext(), BottomNavigation.class);
-                        intent.putExtra("name", getIntent().getStringExtra("username"));
-                        intent.putExtra("profile", getIntent().getStringExtra("getProfileImagePath"));
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), BottomNavigation.class);
+                        intent.putExtra("name", String.valueOf(Profile.getCurrentProfile().getName()));
+                        intent.putExtra("profile", String.valueOf(Profile.getCurrentProfile().getProfilePictureUri(200, 200)));
+                        //Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         finish();
                     }
@@ -110,19 +87,6 @@ public class MainActivity extends Activity {
             }
         });
 
-    }
-    private void onClickLogout() {
-        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
-            @Override
-            public void onCompleteLogout() {
-                redirectLoginActivity();
-            }
-        });
-    }
-    private void redirectLoginActivity() {
-        final Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override
@@ -165,7 +129,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void onSuccess(MeV2Response result) {
                     UserAccount kakaoAccount = result.getKakaoAccount();
-                    Profile profile = kakaoAccount.getProfile();
+                    com.kakao.usermgmt.response.model.Profile profile = kakaoAccount.getProfile();
                     //Toast.makeText(MainActivity.this, profile.getNickname(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), BottomNavigation.class);
                     intent.putExtra("name", profile.getNickname());
