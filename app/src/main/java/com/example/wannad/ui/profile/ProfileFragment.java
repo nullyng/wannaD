@@ -1,10 +1,13 @@
 package com.example.wannad.ui.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,13 +19,21 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
 import com.example.wannad.BottomNavigation;
+import com.example.wannad.MainActivity;
 import com.example.wannad.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+
+import org.w3c.dom.Text;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
     public static String name = null, profile = null;
@@ -32,8 +43,9 @@ public class ProfileFragment extends Fragment {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ProfileFragment.this.name = dataSnapshot.getValue().toString();
-                //ProfileFragment.this.profile = dataSnapshot.getValue().
+
+                ProfileFragment.this.profile = (String) dataSnapshot.child("profile").getValue();
+                ProfileFragment.this.name = (String) dataSnapshot.child("name").getValue();
             }
 
             @Override
@@ -52,11 +64,36 @@ public class ProfileFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         final TextView textView = root.findViewById(R.id.welcome);
-        if(name==null)
+        final ImageView ivProfile = root.findViewById(R.id.ivProfile);
+        if(name == null)
         {
             read_profile(name, profile);
         }
+        Glide.with(this).load(profile).into(ivProfile);
+        //placeholder(R.drawable.loading_spinner)
         textView.setText(name + "님, 환영합니다.");
+
+        TextView logout_btn = root.findViewById(R.id.logout);
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickLogout();
+            }
+        });
+
         return root;
+    }
+    private void onClickLogout() {
+        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+            @Override
+            public void onCompleteLogout() {
+                redirectLoginActivity();
+            }
+        });
+    }
+    private void redirectLoginActivity() {
+        final Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
+        //finish();
     }
 }

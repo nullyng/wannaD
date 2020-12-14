@@ -49,7 +49,7 @@ public class BottomNavigation extends AppCompatActivity {
         Intent intent = getIntent();
         strNickname = intent.getStringExtra("name");
         strProfile = intent.getStringExtra("profile");
-        mDatabase.child("user").setValue(strNickname);
+        mDatabase.child("user").child("name").setValue(strNickname);
         mDatabase.child("user").child("profile").setValue(strProfile);
 
 

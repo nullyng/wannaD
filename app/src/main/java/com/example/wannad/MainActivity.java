@@ -66,13 +66,6 @@ public class MainActivity extends Activity {
         Session.getCurrentSession().addCallback(callback);
         //Session.getCurrentSession().checkAndImplicitOpen(); //자동로그인
 
-        Button logout_btn = findViewById(R.id.btn_logout);
-        logout_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickLogout();
-            }
-        });
 
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
@@ -110,19 +103,6 @@ public class MainActivity extends Activity {
             }
         });
 
-    }
-    private void onClickLogout() {
-        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
-            @Override
-            public void onCompleteLogout() {
-                redirectLoginActivity();
-            }
-        });
-    }
-    private void redirectLoginActivity() {
-        final Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override
