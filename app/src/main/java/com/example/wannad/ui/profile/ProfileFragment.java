@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.wannad.BottomNavigation;
 import com.example.wannad.MainActivity;
 import com.example.wannad.R;
+import com.example.wannad.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,15 +38,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
     public static String name = null, profile = null;
-    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("user");
+    public static String username;
+    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("User");
 
     public void read_profile(String name, String profile) {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                ProfileFragment.this.profile = (String) dataSnapshot.child("profile").getValue();
-                ProfileFragment.this.name = (String) dataSnapshot.child("name").getValue();
+                ProfileFragment.this.name = (String) dataSnapshot.child(username).child("name").getValue();
+                ProfileFragment.this.profile = (String) dataSnapshot.child(username).child("profile").getValue();
             }
 
             @Override
@@ -65,12 +66,12 @@ public class ProfileFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         final TextView textView = root.findViewById(R.id.welcome);
         final ImageView ivProfile = root.findViewById(R.id.ivProfile);
-        if(name == null)
-        {
+        username = ((BottomNavigation)getActivity()).strNickname;
+
             read_profile(name, profile);
-        }
-        Glide.with(this).load(profile).into(ivProfile);
-        //placeholder(R.drawable.loading_spinner)
+
+        Glide.with(this).load(profile).thumbnail(Glide.with(this).load(R.drawable.loading_profie)).into(ivProfile);
+
         textView.setText(name + "님, 환영합니다.");
 
         TextView logout_btn = root.findViewById(R.id.logout);
