@@ -54,11 +54,11 @@ public class HomeFragment extends Fragment {
         final String[] cafe_logo = {
                 "R.drawable.starbucks",
                 "R.drawable.ediya",
-                "R.drawable.Twosomeplace",
-                "R.drawable.Hollys",
-                "R.drawable.Coffeebean",
-                "R.drawable.Pascucci",
-                "R.drawable.TomNToms",
+                "R.drawable.twosomeplace",
+                "R.drawable.hollys",
+                "R.drawable.coffeebean",
+                "R.drawable.pascucci",
+                "R.drawable.tomntoms",
         };
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 

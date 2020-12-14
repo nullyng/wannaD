@@ -33,7 +33,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".BottomNavigation"></activity>
+        <activity android:name=".BottomNavigation"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".TestActivity"></activity>
 
     </application>
