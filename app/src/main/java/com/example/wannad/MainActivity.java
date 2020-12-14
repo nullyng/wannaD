@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.media.MediaSession2;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -95,7 +96,6 @@ public class MainActivity extends Activity {
                 parameters.putString("fields", "id,name,email,gender,birthday");
                 graphRequest.setParameters(parameters);
                 graphRequest.executeAsync();
-
 
             }
 
