@@ -22,7 +22,6 @@ public class Review {
         result.put("name",name);
         result.put("star",star);
         result.put("context",context);
-
         return result;
     }
 
