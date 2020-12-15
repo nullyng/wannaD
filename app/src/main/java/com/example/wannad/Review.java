@@ -11,10 +11,21 @@ public class Review {
     float star;
     String time;
 
-    public Review(String name, String context, float star, String time){
+    public Review(){ }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setContext(String context) {
         this.context = context;
+    }
+
+    public void setStar(float star) {
         this.star = star;
+    }
+
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -35,6 +46,8 @@ public class Review {
     public String getContext(){
         return context;
     }
+
+    public String getTime(){return time;}
 
     public float getStar(){
         return star;
