@@ -40,6 +40,7 @@ public class ProfileFragment extends Fragment {
     TextView nick_btn;
     TextView nick_space;
     TextView textView;
+    TextView show_review;
 
     ImageView ivProfile;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("User");
@@ -104,6 +105,7 @@ public class ProfileFragment extends Fragment {
         textView = root.findViewById(R.id.welcome);
         ivProfile = root.findViewById(R.id.ivProfile);
         username = ((BottomNavigation)getActivity()).strNickname;
+
         read_profile(name, profile);
         read_nickname();
         Glide.with(this).load(profile).thumbnail(Glide.with(this).load(R.drawable.loading_profie)).into(ivProfile);
@@ -121,6 +123,18 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        //작성한 리뷰보기 버튼
+        show_review = root.findViewById(R.id.show_review);
+        show_review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new MyReviewFragment();
+                Bundle bundle = new Bundle(1);
+                bundle.putString("username",name);
+                fragment.setArguments(bundle);
+                ((BottomNavigation)getActivity()).replaceFragment(fragment);
+            }
+        });
 
         //로그아웃 버튼
         TextView logout_btn = root.findViewById(R.id.logout);

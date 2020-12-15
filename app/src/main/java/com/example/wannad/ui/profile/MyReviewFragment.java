@@ -50,7 +50,7 @@ public class MyReviewFragment extends Fragment {
         myreviewArray = new ArrayList<>();
 
         review_cnt = root.findViewById(R.id.myreviewCnt);
-        username = getArguments().getString("name");
+        username = getArguments().getString("username");
         myreview_read();
 
         adapter = new MyReviewAdapter(getActivity(), myreviewArray);
