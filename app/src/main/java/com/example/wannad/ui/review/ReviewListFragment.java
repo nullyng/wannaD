@@ -43,12 +43,12 @@ public class ReviewListFragment extends Fragment {
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Review");
 
     int cnt;
-    float sum = 0, avg = 0;
+    float sum, avg;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_reviewlist, container, false);
-
+        sum =0; avg = 0;
         recyclerView = root.findViewById(R.id.reviewList);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
