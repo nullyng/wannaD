@@ -58,10 +58,13 @@ public class ReviewFragment extends Fragment {
                 "얼그레이"
         };
         String[] cafes = {
-                "스타벅스",
-                "이디야",
-                "투썸플레이스",
-                "할리스"
+                "STARBUCKS",
+                "EDIYA",
+                "A TWOSOME PLACE",
+                "HOLLYS COFFE",
+                "COFFEE BEAN",
+                "PASCUCCI",
+                "Tom N Toms"
         };
 
         ratingBar = (RatingBar) root.findViewById(R.id.ratingbar);
@@ -99,7 +102,11 @@ public class ReviewFragment extends Fragment {
                  String ugetTime = usimpleDate.format(mDate);
 
                  //Review테이블에 값 저장
-                 temp = new Review(username,context, star,rgetTime);
+                 temp = new Review();
+                 temp.setContext(context);
+                 temp.setName(username);
+                 temp.setStar(star);
+                 temp.setTime(rgetTime);
                  Map<String, Object> postValues = temp.toMap();
                  Map<String, Object> childUpdates = new HashMap<>();
                  String random = getRandomString();
