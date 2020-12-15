@@ -1,12 +1,9 @@
 package com.example.wannad.ui.review;
 
-import android.media.Rating;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -17,13 +14,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.example.wannad.BottomNavigation;
 import com.example.wannad.R;
 import com.example.wannad.Review;
-import com.example.wannad.User;
 import com.example.wannad.User_Review;
-import com.example.wannad.ui.profile.ProfileFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -63,7 +57,6 @@ public class ReviewFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_review, container, false);
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
 
         String[] drinks = {
                 "아메리카노",
@@ -143,6 +136,13 @@ public class ReviewFragment extends Fragment {
                 spinnerc.setSelection(0);
                 ratingBar.setRating(0);
                 spinnerd.setSelection(0);
+
+                 Fragment fragment = new ReviewListFragment();
+                 Bundle bundle = new Bundle(2);
+                 bundle.putString("cname",cname);
+                 bundle.putString("dname",dname);
+                 fragment.setArguments(bundle);
+                 ((BottomNavigation)getActivity()).replaceFragment(fragment);
              }
          });
 
