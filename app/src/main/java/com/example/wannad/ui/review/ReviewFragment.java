@@ -24,7 +24,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.wannad.BottomNavigation;
@@ -127,6 +126,7 @@ public class ReviewFragment extends Fragment {
                             dname = adapterd.getItem(i).toString();
                         }
                         @Override
+
                             public void onNothingSelected(AdapterView<?> adapterView) {
 
                         }
@@ -223,6 +223,7 @@ public class ReviewFragment extends Fragment {
                     adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerd.setAdapter(adapterd);
 
+
                     spinnerd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -242,7 +243,7 @@ public class ReviewFragment extends Fragment {
             }
         });
 
-        //작성하기 버튼 눌렀을때때
+        //작성하기 버튼 눌렀을때
          send.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
@@ -288,14 +289,33 @@ public class ReviewFragment extends Fragment {
                 spinnerd.setSelection(0);
 
                 //후기 작성하면 내가 작성한 리뷰페이지로 넘어감
-                 Fragment fragment = new ReviewListFragment();
-                 Bundle bundle = new Bundle(2);
-                 bundle.putString("cname",cname);
-                 bundle.putString("dname",dname);
-                 fragment.setArguments(bundle);
-                 ((BottomNavigation)getActivity()).replaceFragment(fragment);
-             }
-         });
+                Fragment fragment = new ReviewListFragment();
+                Bundle bundle = new Bundle(2);
+                bundle.putString("cname",cname);
+                bundle.putString("dname",dname);
+                fragment.setArguments(bundle);
+                ((BottomNavigation)getActivity()).replaceFragment(fragment);
+            }
+        });
+
+        if (ContextCompat.checkSelfPermission(
+                getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED) {
+
+        }  else {
+            // You can directly ask for the permission.
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }
+                    ,REQUEST_EXTERNAL_STORAGE_PERMISSIOM);
+        }
+        //사진추가 눌렀을때
+        imagebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(in,REQUEST_IMAGE_CODE);
+            }
+        });
 
          //갤러리 권한 요청
         if (ContextCompat.checkSelfPermission(

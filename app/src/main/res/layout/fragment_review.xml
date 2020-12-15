@@ -7,150 +7,150 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#F1F1F1"
-    >
-    <LinearLayout
-        android:id="@+id/menuchoicelayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:paddingVertical="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        android:background="#F1F1F1"
+        >
         <LinearLayout
+            android:id="@+id/menuchoicelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/context_border">
-         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="어느 카페에서 드셨나요?"
-            android:textStyle="bold"
-            app:layout_constraintVertical_bias="0.4"
-            />
-
-            <Spinner
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:id="@+id/spinnercafe"
-                android:entries = "@array/array"
-                android:scrollbarSize="10sp"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="10dp"
+            android:background="#ffffff"
+            android:paddingVertical="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintVertical_bias="0.3"
+                android:orientation="vertical"
+                android:background="@drawable/context_border">
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="어느 카페에서 드셨나요?"
+                    android:textStyle="bold"
+                    app:layout_constraintVertical_bias="0.4"
+                    />
+
+                <Spinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spinnercafe"
+                    android:entries = "@array/array"
+                    android:scrollbarSize="10sp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintVertical_bias="0.3"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:text="어떤 메뉴를 드셨나요?"
+                    android:textStyle="bold"
+                    app:layout_constraintVertical_bias="0.4"
+                    />
+                <Spinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spinnerdrink"
+                    android:entries = "@array/array"
+                    android:scrollbarSize="10sp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintVertical_bias="0.3"
+                    tools:ignore="MissingConstraints" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/context_border">
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="별점을 매겨주세요!"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    />
+                <RatingBar
+                    android:id="@+id/ratingbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:ratingBarStyleIndicator"
+                    android:isIndicator="false"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="10dp"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+            <EditText
+                android:id="@+id/writeReview"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:background="@drawable/context_border"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="후기를 작성해주세요"
+                android:inputType="textMultiLine"
+                android:privateImeOptions="defaultInputmode=korean"
+                app:layout_constraintVertical_bias="0.53"
                 tools:ignore="MissingConstraints" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/picturePick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="사진 추가"
+                    android:textSize="15dp"
+                    android:textColor="#ffffff"
+                    android:background="@color/colorPrimary"
+                    android:layout_gravity="left"
+                    tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:text="어떤 메뉴를 드셨나요?"
-            android:textStyle="bold"
-            app:layout_constraintVertical_bias="0.4"
-             />
-    <Spinner
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:id="@+id/spinnerdrink"
-        android:entries = "@array/array"
-        android:scrollbarSize="10sp"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias="0.3"
-        tools:ignore="MissingConstraints" />
+                <ImageView
+                    android:id="@+id/review_picture"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_gravity="right"/>
+            </LinearLayout>
         </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/context_border">
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="별점을 매겨주세요!"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-             />
-        <RatingBar
-            android:id="@+id/ratingbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?android:ratingBarStyleIndicator"
-            android:isIndicator="false"
-            android:layout_marginTop="7dp"
-            android:layout_marginBottom="10dp"
-            android:numStars="5"
-            android:stepSize="0.5"
-            android:layout_gravity="center"
-            />
-    </LinearLayout>
-        <EditText
-            android:id="@+id/writeReview"
+
+        <Button
+            android:id="@+id/sendReview"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:background="@drawable/context_border"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="후기를 작성해주세요"
-            android:inputType="textMultiLine"
-            android:privateImeOptions="defaultInputmode=korean"
-            app:layout_constraintVertical_bias="0.53"
-            tools:ignore="MissingConstraints" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingVertical="10dp"
-    android:orientation="horizontal">
-    <Button
-        android:id="@+id/picturePick"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:text="사진 추가"
-        android:textSize="15dp"
-        android:textColor="#ffffff"
-        android:background="@color/colorPrimary"
-        android:layout_gravity="left"
-        tools:ignore="MissingConstraints" />
-
-        <ImageView
-            android:id="@+id/review_picture"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginLeft="50dp"
-            android:layout_gravity="right"/>
-</LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/sendReview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="작성하기"
-        android:textSize="15dp"
-        android:textColor="#ffffff"
-        android:background="@color/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@+id/menuchoicelayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:text="작성하기"
+            android:textSize="15dp"
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@+id/menuchoicelayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </ScrollView>
