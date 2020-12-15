@@ -45,7 +45,9 @@ public class ProfileFragment extends Fragment {
     EditText edittext;
     public static String nickname = "";
     TextView nick_btn;
+    TextView nick_space;
     TextView textView;
+
     ImageView ivProfile;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("User");
     DatabaseReference nickDatabase = FirebaseDatabase.getInstance().getReference().child("User_Nickname");
@@ -74,7 +76,7 @@ public class ProfileFragment extends Fragment {
                     nickname = username;
                     nickDatabase.child(name).child("nickname").setValue(nickname);
                 }
-                nick_btn.setText("닉네임 : " + nickname);
+                nick_space.setText("닉네임 : " + nickname);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -95,7 +97,8 @@ public class ProfileFragment extends Fragment {
 
 
         //닉네임 변경
-        nick_btn = root.findViewById(R.id.nickname);
+        nick_btn = root.findViewById(R.id.nickname_edit_btn);
+        nick_space = root.findViewById(R.id.nickname);
         nick_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -130,7 +133,7 @@ public class ProfileFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         //Toast.makeText(getActivity().getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
                         nickname = edittext.getText().toString();
-                        nick_btn.setText("닉네임 : " + nickname);
+                        nick_space.setText("닉네임 : " + nickname);
                         nickDatabase.child(username).child("nickname").setValue(nickname);
                     }
                 });

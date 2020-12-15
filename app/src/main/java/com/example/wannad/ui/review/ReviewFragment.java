@@ -17,13 +17,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.wannad.BottomNavigation;
 import com.example.wannad.R;
 import com.example.wannad.Review;
 import com.example.wannad.User;
 import com.example.wannad.User_Review;
+import com.example.wannad.ui.profile.ProfileFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,12 +41,24 @@ public class ReviewFragment extends Fragment {
     RatingBar ratingBar;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     String cname, dname, context, username;
+    public static String nickName;
     TextView review_write;
     Button send;
     Review temp;
     User_Review temp2;
     long time;
-
+    public void read_nickname(String nickname) {
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nickName = (String) dataSnapshot.child("User_Nickname").child(username).child("nickname").getValue();
+                Toast.makeText(getActivity(), nickName , Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_review, container, false);
@@ -81,6 +98,8 @@ public class ReviewFragment extends Fragment {
         adapterc.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerc.setAdapter(adapterc);
 
+        username = ((BottomNavigation)getActivity()).strNickname;
+        read_nickname(nickName);
          send.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
@@ -91,7 +110,7 @@ public class ReviewFragment extends Fragment {
 
                  float star = Float.valueOf(ratingBar.getRating());
                  context = review_write.getText().toString();
-                 username = ((BottomNavigation)getActivity()).strNickname;
+
 
                  //현재 시간 받아오기
                  time = System.currentTimeMillis();
@@ -104,7 +123,7 @@ public class ReviewFragment extends Fragment {
                  //Review테이블에 값 저장
                  temp = new Review();
                  temp.setContext(context);
-                 temp.setName(username);
+                 temp.setNickname(nickName);
                  temp.setStar(star);
                  temp.setTime(rgetTime);
                  Map<String, Object> postValues = temp.toMap();
