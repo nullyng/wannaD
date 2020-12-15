@@ -55,6 +55,7 @@ public class ReviewFragment extends Fragment {
     Review temp;
     User_Review temp2;
     long time;
+    ArrayAdapter<CharSequence> adapterc, adapterd;
     String[] drinks;
 
     Button imagebtn;
@@ -95,12 +96,12 @@ public class ReviewFragment extends Fragment {
         review_img.setVisibility(View.GONE);
 
         spinnerd = root.findViewById(R.id.spinnerdrink);
-        ArrayAdapter<String> adapterd = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, init);
-        adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerd.setAdapter(adapterd);
+        //adapterd = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, init);
+        //adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //spinnerd.setAdapter(adapterd);
 
         spinnerc = root.findViewById(R.id.spinnercafe);
-        ArrayAdapter<String> adapterc = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, cafes);
+        adapterc = new ArrayAdapter<CharSequence>(getActivity(),android.R.layout.simple_spinner_item, cafes);
         adapterc.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerc.setAdapter(adapterc);
 
@@ -110,24 +111,127 @@ public class ReviewFragment extends Fragment {
         //카페 이름 스피너 선택 이벤트리스너
         spinnerc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View arg1, int position, long id) {
-                cname = spinnerc.getSelectedItem().toString();
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                cname = adapterc.getItem(i).toString();
                 if(cname.equals("STARBUCKS"))
-                    drinks = getResources().getStringArray(R.array.starbucks);
-                if(cname.equals("EDIYA"))
-                    drinks = getResources().getStringArray(R.array.ediya);
-                if(cname.equals("A TWOSOME PLACE"))
-                    drinks = getResources().getStringArray(R.array.twosomeplace);
-                if(cname.equals("HOLLYS COFFEE"))
-                    drinks = getResources().getStringArray(R.array.hollys);
-                if(cname.equals("COFFEE BEAN"))
-                    drinks = getResources().getStringArray(R.array.coffeebean);
-                if(cname.equals("PASCUCCI"))
-                    drinks = getResources().getStringArray(R.array.pascucci);
-                if(cname.equals("Tom N Toms"))
-                    drinks = getResources().getStringArray(R.array.tomntoms);
+                {
+                    adapterd = ArrayAdapter.createFromResource(getActivity(), R.array.starbucks, android.R.layout.simple_spinner_dropdown_item);
+                    adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerd.setAdapter(adapterd);
 
-                //spinnerd = ArrayAdapter.createFromResource(getActivity(), drinks);
+                    spinnerd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            dname = adapterd.getItem(i).toString();
+                        }
+                        @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
+                if(cname.equals("EDIYA"))
+                {
+                    adapterd = ArrayAdapter.createFromResource(getActivity(), R.array.ediya, android.R.layout.simple_spinner_dropdown_item);
+                    adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerd.setAdapter(adapterd);
+
+                    spinnerd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            dname = adapterd.getItem(i).toString();
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
+                if(cname.equals("A TWOSOME PLACE"))
+                {
+                    adapterd = ArrayAdapter.createFromResource(getActivity(), R.array.twosomeplace, android.R.layout.simple_spinner_dropdown_item);
+                    adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerd.setAdapter(adapterd);
+
+                    spinnerd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            dname = adapterd.getItem(i).toString();
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
+                if(cname.equals("HOLLYS COFFEE"))
+                {
+                    adapterd = ArrayAdapter.createFromResource(getActivity(), R.array.hollys, android.R.layout.simple_spinner_dropdown_item);
+                    adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerd.setAdapter(adapterd);
+
+                    spinnerd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            dname = adapterd.getItem(i).toString();
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
+                if(cname.equals("COFFEE BEAN"))
+                {
+                    adapterd = ArrayAdapter.createFromResource(getActivity(), R.array.coffeebean, android.R.layout.simple_spinner_dropdown_item);
+                    adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerd.setAdapter(adapterd);
+
+                    spinnerd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            dname = adapterd.getItem(i).toString();
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
+                if(cname.equals("PASCUCCI"))
+                {
+                    adapterd = ArrayAdapter.createFromResource(getActivity(), R.array.pascucci, android.R.layout.simple_spinner_dropdown_item);
+                    adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerd.setAdapter(adapterd);
+
+                    spinnerd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            dname = adapterd.getItem(i).toString();
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
+                if(cname.equals("Tom N Toms"))
+                {
+                    adapterd = ArrayAdapter.createFromResource(getActivity(), R.array.tomntoms, android.R.layout.simple_spinner_dropdown_item);
+                    adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerd.setAdapter(adapterd);
+
+                    spinnerd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            dname = adapterd.getItem(i).toString();
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
             }
 
             @Override
