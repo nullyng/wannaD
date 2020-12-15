@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.review.ReviewFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F1F1F1"
-    tools:context=".ui.review.ReviewFragment">
+    android:layout_height="wrap_content">
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F1F1F1"
+    >
     <LinearLayout
         android:id="@+id/menuchoicelayout"
         android:layout_width="match_parent"
@@ -107,7 +112,11 @@
             android:privateImeOptions="defaultInputmode=korean"
             app:layout_constraintVertical_bias="0.53"
             tools:ignore="MissingConstraints" />
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp"
+    android:orientation="horizontal">
     <Button
         android:id="@+id/picturePick"
         android:layout_width="wrap_content"
@@ -120,7 +129,16 @@
         android:background="@color/colorPrimary"
         android:layout_gravity="left"
         tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/review_picture"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="50dp"
+            android:layout_gravity="right"/>
+</LinearLayout>
     </LinearLayout>
+
     <Button
         android:id="@+id/sendReview"
         android:layout_width="match_parent"
@@ -129,7 +147,10 @@
         android:textSize="15dp"
         android:textColor="#ffffff"
         android:background="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@+id/menuchoicelayout"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints" />
-
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

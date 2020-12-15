@@ -1,21 +1,32 @@
 package com.example.wannad.ui.review;
 
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.wannad.BottomNavigation;
 import com.example.wannad.R;
 import com.example.wannad.Review;
@@ -40,11 +51,15 @@ public class ReviewFragment extends Fragment {
     public static String nickName;
     TextView review_write;
     Button send;
+    ImageView review_img;
     Review temp;
     User_Review temp2;
     long time;
     String[] drinks;
 
+    Button imagebtn;
+    int REQUEST_IMAGE_CODE = 1001;
+    int REQUEST_EXTERNAL_STORAGE_PERMISSIOM=1002;
     public void read_nickname(String nickname) {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -75,6 +90,9 @@ public class ReviewFragment extends Fragment {
         ratingBar = (RatingBar) root.findViewById(R.id.ratingbar);
         send = root.findViewById(R.id.sendReview);
         review_write = root.findViewById(R.id.writeReview);
+        imagebtn = root.findViewById(R.id.picturePick);
+        review_img = root.findViewById(R.id.review_picture);
+        review_img.setVisibility(View.GONE);
 
         spinnerd = root.findViewById(R.id.spinnerdrink);
         ArrayAdapter<String> adapterd = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, init);
@@ -124,6 +142,7 @@ public class ReviewFragment extends Fragment {
              public void onClick(View view) {
                  Toast.makeText(getActivity(), "작성 되었습니다", Toast.LENGTH_SHORT).show();
                  //스피너에서 선택된 값 받아오기
+                 cname = spinnerc.getSelectedItem().toString();
                  dname = spinnerd.getSelectedItem().toString();
 
                  float star = Float.valueOf(ratingBar.getRating());
@@ -172,8 +191,47 @@ public class ReviewFragment extends Fragment {
              }
          });
 
+        if (ContextCompat.checkSelfPermission(
+                getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED) {
+
+        }  else {
+            // You can directly ask for the permission.
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }
+                    ,REQUEST_EXTERNAL_STORAGE_PERMISSIOM);
+        }
+         //사진추가 눌렀을때
+        imagebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(in,REQUEST_IMAGE_CODE);
+            }
+        });
+
         return root;
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    //갤러리 부를 시 필요한 함수
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_IMAGE_CODE){
+            imagebtn.setText("사진변경");
+            review_img.setVisibility(View.VISIBLE);
+
+            Uri image = data.getData();
+            Glide.with(this).load(image).into(review_img);
+
+        }
+    }
+
 
     private static String getRandomString() {
         int length = 10;
