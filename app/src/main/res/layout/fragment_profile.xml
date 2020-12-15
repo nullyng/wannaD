@@ -58,11 +58,13 @@
 
         <TextView
             android:id="@+id/nickname_edit_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="20dp"
+            android:background="@drawable/textview_button"
             android:textSize="12sp"
+            android:gravity = "center_horizontal"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="280dp"
+            android:layout_marginLeft="250dp"
             android:textColor = "#000000"
             android:text="변경하기"
          />

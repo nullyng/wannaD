@@ -76,7 +76,7 @@ public class MyReview extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-            holder.rv_name.setText(myreviewArray.get(position).getName());
+            holder.rv_name.setText(myreviewArray.get(position).getNickname());
             holder.rv_context.setText(myreviewArray.get(position).getContext());
             holder.star.setRating(myreviewArray.get(position).getStar());
         }

@@ -37,7 +37,10 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 import org.w3c.dom.Text;
 
+import java.util.Iterator;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class ProfileFragment extends Fragment {
     public static String name = null, profile = null;
@@ -51,6 +54,8 @@ public class ProfileFragment extends Fragment {
     ImageView ivProfile;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("User");
     DatabaseReference nickDatabase = FirebaseDatabase.getInstance().getReference().child("User_Nickname");
+    private DatabaseReference databaseReference;
+
     public void read_profile(String name, String profile) {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -83,6 +88,26 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
+    /*private ValueEventListener checkRegister = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            //Toast.makeText(getActivity().getApplicationContext(), "닉네임 검사", Toast.LENGTH_LONG).show();
+            Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
+            while (child.hasNext()) {
+                if (edittext.getText().toString().equals(child.next().getKey())) {
+                    Toast.makeText(getActivity().getApplicationContext(), "존재하는 닉네임 입니다.", Toast.LENGTH_LONG).show();
+                    databaseReference.removeEventListener(this);
+                    return;
+                }
+            }
+            //onClickNickname();
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+        }
+    };*/
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
@@ -133,6 +158,10 @@ public class ProfileFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         //Toast.makeText(getActivity().getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
                         nickname = edittext.getText().toString();
+
+                        //닉네임 중복 검사하는 코드
+                        //databaseReference.addListenerForSingleValueEvent(checkRegister);
+
                         nick_space.setText("닉네임 : " + nickname);
                         nickDatabase.child(username).child("nickname").setValue(nickname);
                     }
