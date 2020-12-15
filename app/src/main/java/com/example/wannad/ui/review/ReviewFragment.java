@@ -1,9 +1,14 @@
 package com.example.wannad.ui.review;
 
+
+import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -41,12 +46,13 @@ public class ReviewFragment extends Fragment {
     Review temp;
     User_Review temp2;
     long time;
+    String[] drinks;
+
     public void read_nickname(String nickname) {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 nickName = (String) dataSnapshot.child("User_Nickname").child(username).child("nickname").getValue();
-                Toast.makeText(getActivity(), nickName , Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -58,31 +64,23 @@ public class ReviewFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_review, container, false);
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        String[] drinks = {
-                "아메리카노",
-                "카페라떼",
-                "아인슈페너",
-                "초코라떼",
-                "딸기라떼",
-                "피치우롱",
-                "얼그레이"
-        };
         String[] cafes = {
                 "STARBUCKS",
                 "EDIYA",
                 "A TWOSOME PLACE",
-                "HOLLYS COFFE",
+                "HOLLYS COFFEE",
                 "COFFEE BEAN",
                 "PASCUCCI",
                 "Tom N Toms"
         };
+        String[] temp ={"카페선택 부탁"};
 
         ratingBar = (RatingBar) root.findViewById(R.id.ratingbar);
         send = root.findViewById(R.id.sendReview);
         review_write = root.findViewById(R.id.writeReview);
 
         spinnerd = root.findViewById(R.id.spinnerdrink);
-        ArrayAdapter<String> adapterd = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, drinks);
+        ArrayAdapter<String> adapterd = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, temp);
         adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerd.setAdapter(adapterd);
 
@@ -96,9 +94,35 @@ public class ReviewFragment extends Fragment {
          send.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                 Toast.makeText(getActivity(), "작성이되었습니다", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(getActivity(), "작성 되었습니다", Toast.LENGTH_SHORT).show();
                  //스피너에서 선택된 값 받아오기
-                 cname = spinnerc.getSelectedItem().toString();
+                 spinnerc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                     @Override
+                     public void onItemSelected(AdapterView<?> parent, View arg1, int position, long id) {
+                         cname = spinnerc.getSelectedItem().toString();
+                         if(cname.equals("STARBUCKS"))
+                             drinks = getResources().getStringArray(R.array.starbucks);
+                         if(cname.equals("EDIYA"))
+                             drinks = getResources().getStringArray(R.array.ediya);
+                         if(cname.equals("A TWOSOME PLACE"))
+                             drinks = getResources().getStringArray(R.array.twosomeplace);
+                         if(cname.equals("HOLLYS COFFEE"))
+                             drinks = getResources().getStringArray(R.array.hollys);
+                         if(cname.equals("COFFEE BEAN"))
+                             drinks = getResources().getStringArray(R.array.coffeebean);
+                         if(cname.equals("PASCUCCI"))
+                             drinks = getResources().getStringArray(R.array.pascucci);
+                         if(cname.equals("Tom N Toms"))
+                             drinks = getResources().getStringArray(R.array.tomntoms);
+
+                        spinnerd = ArrayAdapter.createFromResource(root.getContext(), drinks);
+                     }
+
+                     @Override
+                     public void onNothingSelected(AdapterView<?> parent) {
+                         ;
+                     }
+                 });
                  dname = spinnerd.getSelectedItem().toString();
 
                  float star = Float.valueOf(ratingBar.getRating());

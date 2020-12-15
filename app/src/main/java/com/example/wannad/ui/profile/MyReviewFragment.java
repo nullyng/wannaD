@@ -31,6 +31,7 @@ public class MyReviewFragment extends Fragment {
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     ArrayList<Myreview> myreviewArray;
     TextView review_cnt;
+    TextView star0, star1,star2,star3,star4;
     private String username;
     private int cnt;
     private RecyclerView recyclerView;
@@ -52,6 +53,44 @@ public class MyReviewFragment extends Fragment {
         review_cnt = root.findViewById(R.id.myreviewCnt);
         username = getArguments().getString("username");
         myreview_read();
+
+        //별점누르기
+        star0 = root.findViewById(R.id.star0);
+        star1 = root.findViewById(R.id.star1);
+        star2 = root.findViewById(R.id.star2);
+        star3 = root.findViewById(R.id.star3);
+        star4 = root.findViewById(R.id.star4);
+
+        star0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                star_read(0);
+            }
+        });
+        star1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                star_read(1);
+            }
+        });
+        star2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                star_read(2);
+            }
+        });
+        star3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                star_read(3);
+            }
+        });
+        star4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                star_read(4);
+            }
+        });
 
         adapter = new MyReviewAdapter(getActivity(), myreviewArray);
         recyclerView.setAdapter(adapter);
@@ -120,6 +159,31 @@ public class MyReviewFragment extends Fragment {
                     Myreview temp = dataSnapshot.getValue(Myreview.class);
                     myreviewArray.add(temp);
                     cnt++;
+                }
+                adapter.notifyDataSetChanged();
+                review_cnt.setText(Integer.toString(cnt));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void star_read(final int border){
+        DatabaseReference childreference = mDatabase.child("User_Review").child(username);
+        cnt = 0;
+        childreference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                myreviewArray.clear();
+                for(DataSnapshot dataSnapshot :  snapshot.getChildren()){
+                    Myreview temp = dataSnapshot.getValue(Myreview.class);
+                    if(temp.getStar()>=border && temp.getStar()<(border+1)) {
+                        myreviewArray.add(temp);
+                        cnt++;
+                    }
                 }
                 adapter.notifyDataSetChanged();
                 review_cnt.setText(Integer.toString(cnt));
