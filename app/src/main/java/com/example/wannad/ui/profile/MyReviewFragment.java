@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wannad.Myreview;
 import com.example.wannad.R;
 import com.example.wannad.Review;
 import com.google.firebase.database.DataSnapshot;
@@ -25,11 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MyReview extends Fragment {
+public class MyReviewFragment extends Fragment {
 
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    ArrayList<Review> myreviewArray;
+    ArrayList<Myreview> myreviewArray;
     TextView review_cnt;
+    private String username;
     private int cnt;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -41,14 +43,14 @@ public class MyReview extends Fragment {
         View root = inflater.inflate(R.layout.fragment_myreview,container,false);
 
         cnt = 0;
-        recyclerView = root.findViewById(R.id.reviewList);
+        recyclerView = root.findViewById(R.id.myreviewList);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         myreviewArray = new ArrayList<>();
 
         review_cnt = root.findViewById(R.id.myreviewCnt);
-
+        username = getArguments().getString("name");
         myreview_read();
 
         adapter = new MyReviewAdapter(getActivity(), myreviewArray);
@@ -59,9 +61,9 @@ public class MyReview extends Fragment {
 
     class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.CustomViewHolder> {
         Context context;
-        ArrayList<Review> review;
+        ArrayList<Myreview> review;
 
-        public MyReviewAdapter(Context context, ArrayList<Review> review) {
+        public MyReviewAdapter(Context context, ArrayList<Myreview> review) {
             this.context = context;
             this.review = review;
         }
@@ -69,14 +71,16 @@ public class MyReview extends Fragment {
         @NonNull
         @Override
         public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_list,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.myreview_list,parent,false);
             CustomViewHolder holder = new MyReviewAdapter.CustomViewHolder(view);
             return holder;
         }
 
         @Override
         public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-            holder.rv_name.setText(myreviewArray.get(position).getNickname());
+            holder.rv_cname.setText(myreviewArray.get(position).getCname());
+            holder.rv_dname.setText(myreviewArray.get(position).getDname());
+            holder.time.setText(myreviewArray.get(position).getTime());
             holder.rv_context.setText(myreviewArray.get(position).getContext());
             holder.star.setRating(myreviewArray.get(position).getStar());
         }
@@ -88,35 +92,37 @@ public class MyReview extends Fragment {
 
 
         public class CustomViewHolder extends RecyclerView.ViewHolder{
-            TextView rv_name;
+            TextView rv_cname;
+            TextView rv_dname;
+            TextView time;
             TextView rv_context;
             RatingBar star;
 
             public CustomViewHolder(@NonNull View itemView) {
                 super(itemView);
                 this.rv_context = itemView.findViewById(R.id.review_context);
-                this.rv_name = itemView.findViewById(R.id.review_name);
+                this.rv_cname = itemView.findViewById(R.id.myreview_cname);
+                this.rv_dname = itemView.findViewById(R.id.myreview_dname);
+                this.time = itemView.findViewById(R.id.myreview_time);
                 this.star = itemView.findViewById(R.id.reviewRating);
             }
         }
     }
 
     public void myreview_read(){
-        DatabaseReference childreference = mDatabase.child("User_Review");
+        DatabaseReference childreference = mDatabase.child("User_Review").child(username);
 
         childreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myreviewArray.clear();
                 for(DataSnapshot dataSnapshot :  snapshot.getChildren()){
-                    Review temp = dataSnapshot.getValue(Review.class);
+                    Myreview temp = dataSnapshot.getValue(Myreview.class);
                     myreviewArray.add(temp);
                     cnt++;
-
                 }
                 adapter.notifyDataSetChanged();
                 review_cnt.setText(Integer.toString(cnt));
-
             }
 
             @Override

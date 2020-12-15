@@ -54,7 +54,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/reviewList"
+        android:id="@+id/myreviewList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"

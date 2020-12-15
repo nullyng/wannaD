@@ -96,6 +96,7 @@ public class ReviewListFragment extends Fragment {
             holder.rv_name.setText(reviewArray.get(position).getNickname());
             holder.rv_context.setText(reviewArray.get(position).getContext());
             holder.star.setRating(reviewArray.get(position).getStar());
+            holder.rv_time.setText(reviewArray.get(position).getTime());
         }
 
         @Override
@@ -107,11 +108,13 @@ public class ReviewListFragment extends Fragment {
         public class CustomViewHolder extends RecyclerView.ViewHolder{
             TextView rv_name;
             TextView rv_context;
+            TextView rv_time;
             RatingBar star;
 
             public CustomViewHolder(@NonNull View itemView) {
                 super(itemView);
                 this.rv_context = itemView.findViewById(R.id.review_context);
+                this.rv_time = itemView.findViewById(R.id.review_time);
                 this.rv_name = itemView.findViewById(R.id.review_name);
                 this.star = itemView.findViewById(R.id.reviewRating);
             }
