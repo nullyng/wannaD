@@ -6,15 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Review {
-    String name;
+    String nickname;
     String context;
     float star;
     String time;
 
     public Review(){ }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public void setContext(String context) {
@@ -32,15 +32,15 @@ public class Review {
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
-        result.put("name",name);
+        result.put("nickname",nickname);
         result.put("star",star);
         result.put("context",context);
         result.put("time",time);
         return result;
     }
 
-    public String getName(){
-        return name;
+    public String getNickname(){
+        return nickname;
     }
 
     public String getContext(){

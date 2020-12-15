@@ -93,7 +93,7 @@ public class ReviewListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-            holder.rv_name.setText(reviewArray.get(position).getName());
+            holder.rv_name.setText(reviewArray.get(position).getNickname());
             holder.rv_context.setText(reviewArray.get(position).getContext());
             holder.star.setRating(reviewArray.get(position).getStar());
         }
