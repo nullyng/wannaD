@@ -1,6 +1,5 @@
 package com.example.wannad;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -28,7 +27,6 @@ public class BottomNavigation extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bottom_navigation);
         BottomNavigationView navView = findViewById(R.id.nav_view);
