@@ -59,8 +59,10 @@ public class ReviewFragment extends Fragment {
     String[] drinks;
 
     Button imagebtn;
+    String image = "null";
     int REQUEST_IMAGE_CODE = 1001;
     int REQUEST_EXTERNAL_STORAGE_PERMISSIOM=1002;
+
     public void read_nickname(String nickname) {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -236,7 +238,7 @@ public class ReviewFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                ;
+
             }
         });
 
@@ -252,7 +254,6 @@ public class ReviewFragment extends Fragment {
                  float star = Float.valueOf(ratingBar.getRating());
                  context = review_write.getText().toString();
 
-
                  //현재 시간 받아오기
                  time = System.currentTimeMillis();
                  Date mDate = new Date(time);
@@ -267,6 +268,7 @@ public class ReviewFragment extends Fragment {
                  temp.setNickname(nickName);
                  temp.setStar(star);
                  temp.setTime(rgetTime);
+                 temp.setImg(image);
                  Map<String, Object> postValues = temp.toMap();
                  Map<String, Object> childUpdates = new HashMap<>();
                  String random = getRandomString();
@@ -274,7 +276,7 @@ public class ReviewFragment extends Fragment {
                  mDatabase.updateChildren(childUpdates);
 
                  //User테이블에 review 정보 저장
-                 temp2 = new User_Review(cname, dname, context, star, rgetTime);
+                 temp2 = new User_Review(cname, dname, context, star, rgetTime,image);
                  Map<String, Object> postValues2 = temp2.toMap();
                  Map<String, Object> childUpdates2 = new HashMap<>();
                  childUpdates2.put("/User_Review/" +username+"/review"+random,postValues2);
@@ -295,6 +297,7 @@ public class ReviewFragment extends Fragment {
              }
          });
 
+         //갤러리 권한 요청
         if (ContextCompat.checkSelfPermission(
                 getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_GRANTED) {
@@ -305,6 +308,7 @@ public class ReviewFragment extends Fragment {
                     new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }
                     ,REQUEST_EXTERNAL_STORAGE_PERMISSIOM);
         }
+
          //사진추가 눌렀을때
         imagebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -330,8 +334,8 @@ public class ReviewFragment extends Fragment {
             imagebtn.setText("사진변경");
             review_img.setVisibility(View.VISIBLE);
 
-            Uri image = data.getData();
-            Glide.with(this).load(image).into(review_img);
+            image = (data.getData()).toString();
+            Glide.with(this).load(Uri.parse(image)).into(review_img);
 
         }
     }

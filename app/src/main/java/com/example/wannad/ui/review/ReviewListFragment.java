@@ -1,10 +1,12 @@
 package com.example.wannad.ui.review;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.wannad.R;
 import com.example.wannad.Review;
 import com.google.firebase.database.DataSnapshot;
@@ -93,6 +96,7 @@ public class ReviewListFragment extends Fragment {
             holder.rv_context.setText(reviewArray.get(position).getContext());
             holder.star.setRating(reviewArray.get(position).getStar());
             holder.rv_time.setText(reviewArray.get(position).getTime());
+            Glide.with(holder.itemView).load(reviewArray.get(position).getImg()).into(holder.review_img);
         }
 
         @Override
@@ -106,6 +110,7 @@ public class ReviewListFragment extends Fragment {
             TextView rv_context;
             TextView rv_time;
             RatingBar star;
+            ImageView review_img;
 
             public CustomViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -113,6 +118,7 @@ public class ReviewListFragment extends Fragment {
                 this.rv_time = itemView.findViewById(R.id.review_time);
                 this.rv_name = itemView.findViewById(R.id.review_name);
                 this.star = itemView.findViewById(R.id.reviewRating);
+                this.review_img = itemView.findViewById(R.id.review_image);
             }
         }
     }

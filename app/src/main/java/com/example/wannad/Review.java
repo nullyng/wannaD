@@ -1,5 +1,7 @@
 package com.example.wannad;
 
+import android.net.Uri;
+
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
@@ -10,6 +12,7 @@ public class Review {
     String context;
     float star;
     String time;
+    String img;
 
     public Review(){ }
 
@@ -29,6 +32,10 @@ public class Review {
         this.time = time;
     }
 
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
@@ -36,6 +43,7 @@ public class Review {
         result.put("star",star);
         result.put("context",context);
         result.put("time",time);
+        result.put("image",img);
         return result;
     }
 
@@ -51,5 +59,9 @@ public class Review {
 
     public float getStar(){
         return star;
+    }
+
+    public String getImg() {
+        return img;
     }
 }
