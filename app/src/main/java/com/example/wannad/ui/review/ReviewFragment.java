@@ -18,13 +18,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.wannad.BottomNavigation;
 import com.example.wannad.R;
 import com.example.wannad.Review;
 import com.example.wannad.User;
+import com.example.wannad.User_Review;
+import com.example.wannad.ui.profile.ProfileFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -34,10 +42,24 @@ public class ReviewFragment extends Fragment {
     RatingBar ratingBar;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     String cname, dname, context, username;
+    public static String nickName;
     TextView review_write;
     Button send;
     Review temp;
-
+    User_Review temp2;
+    long time;
+    public void read_nickname(String nickname) {
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nickName = (String) dataSnapshot.child("User_Nickname").child(username).child("nickname").getValue();
+                Toast.makeText(getActivity(), nickName , Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_review, container, false);
@@ -53,10 +75,13 @@ public class ReviewFragment extends Fragment {
                 "얼그레이"
         };
         String[] cafes = {
-                "스타벅스",
-                "이디야",
-                "투썸플레이스",
-                "할리스"
+                "STARBUCKS",
+                "EDIYA",
+                "A TWOSOME PLACE",
+                "HOLLYS COFFE",
+                "COFFEE BEAN",
+                "PASCUCCI",
+                "Tom N Toms"
         };
 
         ratingBar = (RatingBar) root.findViewById(R.id.ratingbar);
@@ -73,22 +98,51 @@ public class ReviewFragment extends Fragment {
         adapterc.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerc.setAdapter(adapterc);
 
+        username = ((BottomNavigation)getActivity()).strNickname;
+        read_nickname(nickName);
          send.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                  Toast.makeText(getActivity(), "작성이되었습니다", Toast.LENGTH_SHORT).show();
+                 //스피너에서 선택된 값 받아오기
                  cname = spinnerc.getSelectedItem().toString();
                  dname = spinnerd.getSelectedItem().toString();
+
                  float star = Float.valueOf(ratingBar.getRating());
                  context = review_write.getText().toString();
-                 username = ((BottomNavigation)getActivity()).strNickname;
 
-                 temp = new Review(username,context, star);
+
+                 //현재 시간 받아오기
+                 time = System.currentTimeMillis();
+                 Date mDate = new Date(time);
+                 SimpleDateFormat rsimpleDate = new SimpleDateFormat("yyyy.MM.dd");
+                 SimpleDateFormat usimpleDate = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+                 String rgetTime = rsimpleDate.format(mDate);
+                 String ugetTime = usimpleDate.format(mDate);
+
+                 //Review테이블에 값 저장
+                 temp = new Review();
+                 temp.setContext(context);
+                 temp.setNickname(nickName);
+                 temp.setStar(star);
+                 temp.setTime(rgetTime);
                  Map<String, Object> postValues = temp.toMap();
                  Map<String, Object> childUpdates = new HashMap<>();
                  String random = getRandomString();
                  childUpdates.put("/Review/"+cname+"/"+dname+"/review"+random,postValues);
                  mDatabase.updateChildren(childUpdates);
+
+                 //User테이블에 review 정보 저장
+                 temp2 = new User_Review(cname, dname, context, star, rgetTime);
+                 Map<String, Object> postValues2 = temp2.toMap();
+                 Map<String, Object> childUpdates2 = new HashMap<>();
+                 childUpdates2.put("/User_Review/" +username+"/review"+random,postValues2);
+                 mDatabase.updateChildren(childUpdates2);
+
+                review_write.setText("");
+                spinnerc.setSelection(0);
+                ratingBar.setRating(0);
+                spinnerd.setSelection(0);
              }
          });
 

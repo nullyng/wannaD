@@ -2,6 +2,7 @@ package com.example.wannad.ui.review;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Trace;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,105 +16,134 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wannad.R;
 import com.example.wannad.Review;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class ReviewListFragment extends Fragment {
-    ListView list;
     TextView cName, dName;
     String ckey, dkey, context;
     RatingBar ratingBar, ratingBarAvg;
+    ArrayList<Review> reviewArray;
     TextView reviewCnt;
-    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    Review[] review;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Review");
+
     int cnt;
-    float sum = 0, avg = 0;
+    float sum, avg;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        String[] temp = new String[0];
         View root = inflater.inflate(R.layout.fragment_reviewlist, container, false);
-        list = root.findViewById(R.id.reviewList);
+        sum =0; avg = 0;
+        recyclerView = root.findViewById(R.id.reviewList);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        reviewArray = new ArrayList<>();
+
         cName = root.findViewById(R.id.review_cafe);
         dName = root.findViewById(R.id.review_drink);
         ckey = getArguments().getString("cname");
         dkey = getArguments().getString("dname");
-
         ratingBar = root.findViewById(R.id.reviewRating);
         reviewCnt = root.findViewById(R.id.reviewCnt);
         ratingBarAvg = root.findViewById(R.id.reviewRatingAvg);
 
         cName.setText(ckey);
         dName.setText(dkey);
-        ReviewAdapter adapter = new ReviewAdapter(inflater.getContext(),R.layout.review_list,temp);
-        list.setAdapter(adapter);
+
+        review_read();
+
+        adapter = new ReviewAdapter(getActivity(), reviewArray);
+        recyclerView.setAdapter(adapter);
 
         return root;
     }
 
-    class ReviewAdapter extends BaseAdapter {
+    class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomViewHolder> {
         Context context;
-        int layout;
-        String[] review;
-        LayoutInflater inflater;
+        ArrayList<Review> review;
 
-        public ReviewAdapter(Context context, int layout, String[] review) {
+        public ReviewAdapter(Context context, ArrayList<Review> review) {
             this.context = context;
-            this.layout = layout;
             this.review = review;
-            inflater = (LayoutInflater) context.getSystemService
-                    (Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @NonNull
+        @Override
+        public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_list,parent,false);
+            CustomViewHolder holder = new CustomViewHolder(view);
+            return holder;
         }
 
         @Override
-        public int getCount() {
-            return review.length;
+        public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
+            holder.rv_name.setText(reviewArray.get(position).getNickname());
+            holder.rv_context.setText(reviewArray.get(position).getContext());
+            holder.star.setRating(reviewArray.get(position).getStar());
+            holder.rv_time.setText(reviewArray.get(position).getTime());
         }
 
         @Override
-        public Object getItem(int i) {
-            return review[i];
+        public int getItemCount() {
+            return (review != null ? review.size():0);
         }
 
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
 
-        @Override
-        public View getView(int position, View view, ViewGroup viewGroup) {
+        public class CustomViewHolder extends RecyclerView.ViewHolder{
+            TextView rv_name;
+            TextView rv_context;
+            TextView rv_time;
+            RatingBar star;
 
-            if (view == null) {
-                view = inflater.inflate(layout, null);
+            public CustomViewHolder(@NonNull View itemView) {
+                super(itemView);
+                this.rv_context = itemView.findViewById(R.id.review_context);
+                this.rv_time = itemView.findViewById(R.id.review_time);
+                this.rv_name = itemView.findViewById(R.id.review_name);
+                this.star = itemView.findViewById(R.id.reviewRating);
             }
-
-            ImageView iconImage = (ImageView) view.findViewById(R.id.review_image);
-            TextView review_context = (TextView) view.findViewById(R.id.review_context);
-
-            iconImage.setImageResource(R.drawable.starbucks);
-            review_context.setText(review[position]);
-
-
-            return view;
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        //review_read();
+    }
+
     public void review_read(){
+        Toast.makeText(getActivity(), "db read", Toast.LENGTH_SHORT).show();
         DatabaseReference childreference = mDatabase.child(ckey).child(dkey);
 
         childreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot reviewsnapshot : snapshot.getChildren())
-                {
-                    
+                reviewArray.clear();
+                for(DataSnapshot dataSnapshot :  snapshot.getChildren()){
+                    Review temp = dataSnapshot.getValue(Review.class);
+                    reviewArray.add(temp);
+                    cnt++;
+                    ratingAvg(temp.getStar());
                 }
+                adapter.notifyDataSetChanged();
+                reviewCnt.setText(Integer.toString(cnt));
+                ratingBarAvg.setRating(avg);
             }
 
             @Override
@@ -121,5 +151,12 @@ public class ReviewListFragment extends Fragment {
 
             }
         });
+    }
+
+    public float ratingAvg(float cur){
+        sum += cur;
+        avg = sum/cnt;
+
+        return avg;
     }
 }

@@ -50,7 +50,7 @@ public class HomeDrinks extends Fragment {
         title = (TextView)root.findViewById(R.id.cafe_title);
         list = (ListView)root.findViewById(R.id.cafe_drinks);
         img = (ImageView)root.findViewById(R.id.title_cafeImg);
-        img.setImageResource(R.drawable.starbucks);
+        img.setImageResource(getArguments().getInt("image"));
 
         title.setText(cName);
         DrinkAdapter adapter = new DrinkAdapter(inflater.getContext(),R.layout.drinklist,drinks);
