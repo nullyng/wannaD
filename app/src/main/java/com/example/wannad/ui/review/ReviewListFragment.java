@@ -128,7 +128,6 @@ public class ReviewListFragment extends Fragment {
     }
 
     public void review_read(){
-        Toast.makeText(getActivity(), "db read", Toast.LENGTH_SHORT).show();
         DatabaseReference childreference = mDatabase.child(ckey).child(dkey);
 
         childreference.addValueEventListener(new ValueEventListener() {

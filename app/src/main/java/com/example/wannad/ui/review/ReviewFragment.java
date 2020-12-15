@@ -53,7 +53,6 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 nickName = (String) dataSnapshot.child("User_Nickname").child(username).child("nickname").getValue();
-                Toast.makeText(getActivity(), nickName , Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

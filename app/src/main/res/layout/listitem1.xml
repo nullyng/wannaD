@@ -20,7 +20,7 @@
         android:layout_width="206dp"
         android:layout_height="90dp"
         android:gravity="center_vertical"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintStart_toEndOf="@+id/cafe_icon"
