@@ -91,38 +91,42 @@ public class ReviewFragment extends Fragment {
 
         username = ((BottomNavigation)getActivity()).strNickname;
         read_nickname(nickName);
+
+        //카페 이름 스피너 선택 이벤트리스너
+        spinnerc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View arg1, int position, long id) {
+                cname = spinnerc.getSelectedItem().toString();
+                if(cname.equals("STARBUCKS"))
+                    drinks = getResources().getStringArray(R.array.starbucks);
+                if(cname.equals("EDIYA"))
+                    drinks = getResources().getStringArray(R.array.ediya);
+                if(cname.equals("A TWOSOME PLACE"))
+                    drinks = getResources().getStringArray(R.array.twosomeplace);
+                if(cname.equals("HOLLYS COFFEE"))
+                    drinks = getResources().getStringArray(R.array.hollys);
+                if(cname.equals("COFFEE BEAN"))
+                    drinks = getResources().getStringArray(R.array.coffeebean);
+                if(cname.equals("PASCUCCI"))
+                    drinks = getResources().getStringArray(R.array.pascucci);
+                if(cname.equals("Tom N Toms"))
+                    drinks = getResources().getStringArray(R.array.tomntoms);
+
+                //spinnerd = ArrayAdapter.createFromResource(getActivity(), drinks);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                ;
+            }
+        });
+
+        //작성하기 버튼 눌렀을때때
          send.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                  Toast.makeText(getActivity(), "작성 되었습니다", Toast.LENGTH_SHORT).show();
                  //스피너에서 선택된 값 받아오기
-                 spinnerc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                     @Override
-                     public void onItemSelected(AdapterView<?> parent, View arg1, int position, long id) {
-                         cname = spinnerc.getSelectedItem().toString();
-                         if(cname.equals("STARBUCKS"))
-                             drinks = getResources().getStringArray(R.array.starbucks);
-                         if(cname.equals("EDIYA"))
-                             drinks = getResources().getStringArray(R.array.ediya);
-                         if(cname.equals("A TWOSOME PLACE"))
-                             drinks = getResources().getStringArray(R.array.twosomeplace);
-                         if(cname.equals("HOLLYS COFFEE"))
-                             drinks = getResources().getStringArray(R.array.hollys);
-                         if(cname.equals("COFFEE BEAN"))
-                             drinks = getResources().getStringArray(R.array.coffeebean);
-                         if(cname.equals("PASCUCCI"))
-                             drinks = getResources().getStringArray(R.array.pascucci);
-                         if(cname.equals("Tom N Toms"))
-                             drinks = getResources().getStringArray(R.array.tomntoms);
-
-                        //spinnerd = ArrayAdapter.createFromResource(getActivity(), drinks);
-                     }
-
-                     @Override
-                     public void onNothingSelected(AdapterView<?> parent) {
-                         ;
-                     }
-                 });
                  dname = spinnerd.getSelectedItem().toString();
 
                  float star = Float.valueOf(ratingBar.getRating());
