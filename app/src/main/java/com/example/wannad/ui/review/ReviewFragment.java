@@ -133,10 +133,10 @@ public class ReviewFragment extends Fragment {
                  mDatabase.updateChildren(childUpdates);
 
                  //User테이블에 review 정보 저장
-                 temp2 = new User_Review(cname, dname, context, star, ugetTime);
+                 temp2 = new User_Review(cname, dname, context, star, rgetTime);
                  Map<String, Object> postValues2 = temp2.toMap();
                  Map<String, Object> childUpdates2 = new HashMap<>();
-                 childUpdates2.put("/User/" +username+"/"+"review"+"/review"+random,postValues2);
+                 childUpdates2.put("/User_Review/" +username+"/review"+random,postValues2);
                  mDatabase.updateChildren(childUpdates2);
 
                 review_write.setText("");
