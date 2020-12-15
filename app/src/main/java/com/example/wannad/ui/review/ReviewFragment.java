@@ -125,7 +125,11 @@ public class ReviewFragment extends Fragment {
                             dname = adapterd.getItem(i).toString();
                         }
                         @Override
+<<<<<<< HEAD
                         public void onNothingSelected(AdapterView<?> adapterView) {
+=======
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+>>>>>>> a827c1b9c4c437a7b05e3202c42cee4935e8fc02
 
                         }
                     });
@@ -220,6 +224,7 @@ public class ReviewFragment extends Fragment {
                     adapterd = ArrayAdapter.createFromResource(getActivity(), R.array.tomntoms, android.R.layout.simple_spinner_dropdown_item);
                     adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerd.setAdapter(adapterd);
+<<<<<<< HEAD
 
                     spinnerd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -229,6 +234,17 @@ public class ReviewFragment extends Fragment {
                         @Override
                         public void onNothingSelected(AdapterView<?> adapterView) {
 
+=======
+
+                    spinnerd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            dname = adapterd.getItem(i).toString();
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+>>>>>>> a827c1b9c4c437a7b05e3202c42cee4935e8fc02
                         }
                     });
                 }
@@ -241,6 +257,7 @@ public class ReviewFragment extends Fragment {
         });
 
         //작성하기 버튼 눌렀을때때
+<<<<<<< HEAD
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -279,6 +296,46 @@ public class ReviewFragment extends Fragment {
                 Map<String, Object> childUpdates2 = new HashMap<>();
                 childUpdates2.put("/User_Review/" +username+"/review"+random,postValues2);
                 mDatabase.updateChildren(childUpdates2);
+=======
+         send.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 Toast.makeText(getActivity(), "작성 되었습니다", Toast.LENGTH_SHORT).show();
+                 //스피너에서 선택된 값 받아오기
+                 cname = spinnerc.getSelectedItem().toString();
+                 dname = spinnerd.getSelectedItem().toString();
+
+                 float star = Float.valueOf(ratingBar.getRating());
+                 context = review_write.getText().toString();
+
+
+                 //현재 시간 받아오기
+                 time = System.currentTimeMillis();
+                 Date mDate = new Date(time);
+                 SimpleDateFormat rsimpleDate = new SimpleDateFormat("yyyy.MM.dd");
+                 SimpleDateFormat usimpleDate = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+                 String rgetTime = rsimpleDate.format(mDate);
+                 String ugetTime = usimpleDate.format(mDate);
+
+                 //Review테이블에 값 저장
+                 temp = new Review();
+                 temp.setContext(context);
+                 temp.setNickname(nickName);
+                 temp.setStar(star);
+                 temp.setTime(rgetTime);
+                 Map<String, Object> postValues = temp.toMap();
+                 Map<String, Object> childUpdates = new HashMap<>();
+                 String random = getRandomString();
+                 childUpdates.put("/Review/"+cname+"/"+dname+"/review"+random,postValues);
+                 mDatabase.updateChildren(childUpdates);
+
+                 //User테이블에 review 정보 저장
+                 temp2 = new User_Review(cname, dname, context, star, rgetTime);
+                 Map<String, Object> postValues2 = temp2.toMap();
+                 Map<String, Object> childUpdates2 = new HashMap<>();
+                 childUpdates2.put("/User_Review/" +username+"/review"+random,postValues2);
+                 mDatabase.updateChildren(childUpdates2);
+>>>>>>> a827c1b9c4c437a7b05e3202c42cee4935e8fc02
 
                 review_write.setText("");
                 spinnerc.setSelection(0);
@@ -306,6 +363,25 @@ public class ReviewFragment extends Fragment {
                     ,REQUEST_EXTERNAL_STORAGE_PERMISSIOM);
         }
         //사진추가 눌렀을때
+        imagebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(in,REQUEST_IMAGE_CODE);
+            }
+        });
+
+        if (ContextCompat.checkSelfPermission(
+                getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED) {
+
+        }  else {
+            // You can directly ask for the permission.
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }
+                    ,REQUEST_EXTERNAL_STORAGE_PERMISSIOM);
+        }
+         //사진추가 눌렀을때
         imagebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
