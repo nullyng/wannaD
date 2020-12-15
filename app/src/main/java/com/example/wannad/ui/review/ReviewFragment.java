@@ -1,10 +1,7 @@
 package com.example.wannad.ui.review;
 
-<<<<<<< HEAD
-=======
 import android.content.Intent;
 import android.media.Rating;
->>>>>>> 82440fbd35253da196142a95b9ddb21edf29d12f
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
