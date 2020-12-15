@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
         callbackManager = CallbackManager.Factory.create();
         callback = new SessionCallback();                  // 이 두개의 함수 중요함
         Session.getCurrentSession().addCallback(callback);
-        //Session.getCurrentSession().checkAndImplicitOpen(); //자동로그인
+        Session.getCurrentSession().checkAndImplicitOpen(); //자동로그인
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
 

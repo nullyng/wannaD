@@ -113,7 +113,10 @@ public class ReviewFragment extends Fragment {
                  childUpdates2.put("/User/" +username+"/"+"review"+"/review"+random,postValues2);
                  mDatabase.updateChildren(childUpdates2);
 
-
+                review_write.setText("");
+                spinnerc.setSelection(0);
+                ratingBar.setRating(0);
+                spinnerd.setSelection(0);
              }
          });
 

@@ -1,5 +1,7 @@
 package com.example.wannad.ui.profile;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +42,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
     public static String name = null, profile = null;
     public static String username;
+    EditText edittext;
+    public static String nickname;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("User");
 
     public void read_profile(String name, String profile) {
@@ -74,6 +79,17 @@ public class ProfileFragment extends Fragment {
 
         textView.setText(name + "님, 환영합니다.");
 
+        //닉네임 변경
+        TextView nick_btn = root.findViewById(R.id.nickname);
+        nick_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onClickNickname();
+            }
+        });
+        nick_btn.setText("닉네임 : " + nickname);
+
+        //로그아웃 버튼
         TextView logout_btn = root.findViewById(R.id.logout);
         logout_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +98,35 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
         return root;
+    }
+    private void onClickNickname(){
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View dialogView= inflater.inflate(R.layout.dialog_member, null);
+        edittext = (EditText)dialogView.findViewById(R.id.nickname_edit);
+        builder.setTitle("닉네임 변경");
+        builder.setMessage("변경할 닉네임을 입력해주세요");
+        builder.setView(dialogView)
+                .setPositiveButton("변경",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity().getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
+                        nickname = edittext.getText().toString();
+                    }
+                });
+        builder.setNegativeButton("취소",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+
     }
     private void onClickLogout() {
         UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
