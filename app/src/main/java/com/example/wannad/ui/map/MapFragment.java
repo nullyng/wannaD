@@ -182,20 +182,40 @@ public class MapFragment extends Fragment implements MapView.MapViewEventListene
         int index = place_name.indexOf(" ");
         String except_branch_office_name = place_name.substring(0, index);
 
+        Fragment fragment = HomeDrinks.newinstance();
+        Bundle bundle = new Bundle(2);
+
         if(except_branch_office_name.equals("스타벅스")) {
-            Fragment fragment = HomeDrinks.newinstance();
-            Bundle bundle = new Bundle(1);
             bundle.putString("name", "STARBUCKS");
-            fragment.setArguments(bundle);
-            ((BottomNavigation)getActivity()).replaceFragment(fragment);
+            bundle.putInt("image", R.drawable.starbucks);
+        }
+        if(except_branch_office_name.equals("이디야")) {
+            bundle.putString("name", "EDIYA");
+            bundle.putInt("image", R.drawable.ediya);
         }
         if(except_branch_office_name.equals("투썸플레이스")) {
-            Fragment fragment = HomeDrinks.newinstance();
-            Bundle bundle = new Bundle(1);
             bundle.putString("name", "A TWOSOME PLACE");
-            fragment.setArguments(bundle);
-            ((BottomNavigation)getActivity()).replaceFragment(fragment);
+            bundle.putInt("image", R.drawable.twosomeplace);
         }
+        if(except_branch_office_name.equals("할리스커피")) {
+            bundle.putString("name", "HOLLYS COFFEE");
+            bundle.putInt("image", R.drawable.hollys);
+        }
+        if(except_branch_office_name.equals("커피빈")) {
+            bundle.putString("name", "COFFEE BEAN");
+            bundle.putInt("image", R.drawable.coffeebean);
+        }
+        if(except_branch_office_name.equals("파스쿠찌")) {
+            bundle.putString("name", "PASCUCCI");
+            bundle.putInt("image", R.drawable.pascucci);
+        }
+        if(except_branch_office_name.equals("탐앤탐스")) {
+            bundle.putString("name", "Tom N Toms");
+            bundle.putInt("image", R.drawable.tomntoms);
+        }
+
+        fragment.setArguments(bundle);
+        ((BottomNavigation)getActivity()).replaceFragment(fragment);
     }
 
     @Override
