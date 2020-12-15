@@ -61,17 +61,17 @@ public class MainActivity extends Activity {
         }
 
         callbackManager = CallbackManager.Factory.create();
-        callback = new SessionCallback();                  // 이 두개의 함수 중요함
+        callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
-        Session.getCurrentSession().checkAndImplicitOpen(); //자동로그인
+        Session.getCurrentSession().checkAndImplicitOpen(); //카카오톡 자동로그인
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
 
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
 
+            //로그인 성공하면 이름과 프로필 사진 정보 넘겨주기
             public void onSuccess(final LoginResult loginResult) {
                 GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
@@ -143,6 +143,7 @@ public class MainActivity extends Activity {
                     Toast.makeText(getApplicationContext(),"세션이 닫혔습니다. 다시 시도해 주세요: "+errorResult.getErrorMessage(),Toast.LENGTH_SHORT).show();
                 }
 
+                //로그인 성공하면 이름과 프로필 사진 정보 넘겨주기
                 @Override
                 public void onSuccess(MeV2Response result) {
                     UserAccount kakaoAccount = result.getKakaoAccount();

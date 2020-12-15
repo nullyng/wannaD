@@ -1,13 +1,10 @@
 package com.example.wannad.ui.review;
 
 
-import android.content.Intent;
-import android.media.Rating;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -161,6 +158,7 @@ public class ReviewFragment extends Fragment {
                 ratingBar.setRating(0);
                 spinnerd.setSelection(0);
 
+                //후기 작성하면 내가 작성한 리뷰페이지로 넘어감
                  Fragment fragment = new ReviewListFragment();
                  Bundle bundle = new Bundle(2);
                  bundle.putString("cname",cname);
