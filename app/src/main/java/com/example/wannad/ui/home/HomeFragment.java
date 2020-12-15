@@ -68,10 +68,10 @@ public class HomeFragment extends Fragment {
         final ViewGroup tempcont = container;
 /*
        title.setOnClickListener(new View.OnClickListener() {
-           @Override
+           oast.makeText(getActivity(), "press", Toast.LENGTH_SHORT).show();
+           }@Override
            public void onClick(View view) {
-               Toast.makeText(getActivity(), "press", Toast.LENGTH_SHORT).show();
-           }
+               T
        });
  */
         CafeAdapter adapter = new CafeAdapter
