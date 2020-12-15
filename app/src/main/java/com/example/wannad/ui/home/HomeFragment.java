@@ -59,7 +59,14 @@ public class HomeFragment extends Fragment {
 
         list = (ListView) root.findViewById(R.id.cafe_menu);
         final ViewGroup tempcont = container;
-
+/*
+       title.setOnClickListener(new View.OnClickListener() {
+           oast.makeText(getActivity(), "press", Toast.LENGTH_SHORT).show();
+           }@Override
+           public void onClick(View view) {
+               T
+       });
+ */
         CafeAdapter adapter = new CafeAdapter
                 (inflater.getContext(),R.layout.listitem1,name,cafe_logo);
         list.setAdapter(adapter);

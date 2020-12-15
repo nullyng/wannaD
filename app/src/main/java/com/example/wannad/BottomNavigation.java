@@ -56,7 +56,6 @@ public class BottomNavigation extends AppCompatActivity {
 
     }
 
-
     public void replaceFragment( Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
