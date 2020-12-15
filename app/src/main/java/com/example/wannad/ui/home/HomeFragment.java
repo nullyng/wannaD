@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
                 "STARBUCKS",
                 "EDIYA",
                 "A TWOSOME PLACE",
-                "HOLLYS COFFE",
+                "HOLLYS COFFEE",
                 "COFFEE BEAN",
                 "PASCUCCI",
                 "Tom N Toms"

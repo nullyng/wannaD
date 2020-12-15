@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="starbucks">
+        <item>오늘의 커피</item>
+        <item>딸기 요거트 블렌디드</item>
+        <item>망고 바나나 블렌디드</item>>
+        <item>모카 프라푸치노</item>
+        <item>스타벅스 돌체 라떼</item>
+        <item>아이스 카페 모카</item>
+        <item>자바 칩 프라푸치노</item>
+        <item>카페 라떼</item>
+        <item>카페 모카</item>
+        <item>화이트 초콜릿 모카</item>
+    </string-array>
+
+    <string-array name="ediya">
+        <item>골든바닐라슈페너 ICED</item>
+        <item>꿀복숭아 플랫치노</item>
+        <item>딸기 쉐이크</item>
+        <item>모카 플랫치노</item>
+        <item>블루코코 후룻치노</item>
+        <item>석류 오리지널</item>
+        <item>아인슈페너 ICED</item>
+        <item>연유 카페라떼 ICED</item>
+        <item>콜드브루 아메리카노</item>
+        <item>크림 달고나 밀크티</item>
+    </string-array>
+
+    <string-array name="twosomeplace">
+        <item>오늘의 커피</item>
+        <item>망고 프라페</item>
+        <item>모카칩 커피 프라페</item>
+        <item>버블 그린티 라떼</item>>
+        <item>스페니쉬 연유 카페라떼</item>
+        <item>아이스 카라멜 마키아또</item>
+        <item>아이스 카페 마키아또</item>
+        <item>아이스 카페 아메리카노</item>
+        <item>초콜릿 라떼</item>
+        <item>체리 프라페</item>
+    </string-array>
+
+    <string-array name="hollys">
+        <item>리스트레또 딜라이트</item>
+        <item>바닐라 딜라이트</item>
+        <item>아메리카노</item>
+        <item>아포가토</item>
+        <item>에스프레소</item>
+        <item>오리온 밀크카라멜 마키아또</item>
+        <item>카라멜 마키아또</item>
+        <item>카페모카</item>
+        <item>카푸치노</item>
+        <item>콜드브루 딜라이트</item>
+        <item>프리미엄 블랜드 아메리카노</item>
+    </string-array>
+
+    <string-array name="coffeebean">
+        <item>레몬 유자 캐모마일 티</item>
+        <item>아이스 모카라떼</item>
+        <item>아이스 카페라떼</item>
+        <item>아이스 커피</item>
+        <item>캐러멜 아이스 블렌디드</item>
+        <item>콜드 브루</item>
+        <item>콜드 브루 라떼</item>
+        <item>프래그런트 나이트 쟈스민</item>
+        <item>화이트 포레스트 아이스 블렌디드</item>
+        <item>헤이즐넛 아이스 블렌디드</item>
+    </string-array>
+
+    <string-array name="pascucci">
+        <item>스트로베리 요거트 그라니따</item>
+        <item>아이스 아메리카노</item>
+        <item>아이스 초콜릿</item>
+        <item>아이스 카라멜라떼 마끼아또</item>
+        <item>아이스 카페라떼</item>
+        <item>아이스 카페모카</item>
+        <item>에스프레소</item>
+        <item>자몽 스파클링</item>
+        <item>자색 고구마 라떼</item>
+        <item>콜드브루 아메리카노</item>
+        <item>플레인 요거트 그라니따</item>
+    </string-array>
+
+    <string-array name="tomntoms">
+        <item>딸기 요거트 쉐이크</item>
+        <item>리얼 단호박 스무디</item>
+        <item>블루베리 스무디</item>
+        <item>솔티드카라멜 다크초코</item>
+        <item>아이스 뱅쇼</item>
+        <item>아이스 스패니쉬 라떼</item>
+        <item>아이스 초코</item>
+        <item>아이스 카페라떼</item>
+        <item>아이스 카페 아메리카노</item>
+        <item>카라멜 마끼아또</item>
+        <item>프레인 요거트 스무디</item>
+        <item>흑당 카페라떼</item>
+    </string-array>
+</resources>

@@ -28,25 +28,31 @@ public class HomeDrinks extends Fragment {
     ImageView img;
     TextView title;
     String cName;
-
+    String[] drinks;
     public static HomeDrinks newinstance(){
         return new HomeDrinks();
     }
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
-        final String[] drinks = {
-                "아메리카노",
-                "카페라떼",
-                "아인슈페너",
-                "초코라떼",
-                "딸기라떼",
-                "피치우롱",
-                "얼그레이"
-        };
 
         View root = inflater.inflate(R.layout.fragment_homedrinks, container, false);
 
         cName = getArguments().getString("name");
+        if(cName.equals("STARBUCKS"))
+            drinks = getResources().getStringArray(R.array.starbucks);
+        if(cName.equals("EDIYA"))
+            drinks = getResources().getStringArray(R.array.ediya);
+        if(cName.equals("A TWOSOME PLACE"))
+            drinks = getResources().getStringArray(R.array.twosomeplace);
+        if(cName.equals("HOLLYS COFFEE"))
+            drinks = getResources().getStringArray(R.array.hollys);
+        if(cName.equals("COFFEE BEAN"))
+            drinks = getResources().getStringArray(R.array.coffeebean);
+        if(cName.equals("PASCUCCI"))
+            drinks = getResources().getStringArray(R.array.pascucci);
+        if(cName.equals("Tom N Toms"))
+            drinks = getResources().getStringArray(R.array.tomntoms);
+
         title = (TextView)root.findViewById(R.id.cafe_title);
         list = (ListView)root.findViewById(R.id.cafe_drinks);
         img = (ImageView)root.findViewById(R.id.title_cafeImg);
