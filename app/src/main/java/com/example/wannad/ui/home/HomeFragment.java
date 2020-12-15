@@ -1,33 +1,21 @@
 package com.example.wannad.ui.home;
 
-import android.app.LauncherActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.fragment.app.ListFragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.wannad.BottomNavigation;
 import com.example.wannad.R;
-import com.example.wannad.ui.drinks.DrinkFragment;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeFragment extends Fragment {
     ListView list;
@@ -74,7 +62,7 @@ public class HomeFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(tempcont.getContext(), "press"+i, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(tempcont.getContext(), "press"+i, Toast.LENGTH_SHORT).show();
                 Fragment fragment = HomeDrinks.newinstance();
                 Bundle bundle = new Bundle(2);
                 bundle.putString("name",name[i]);
