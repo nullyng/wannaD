@@ -58,7 +58,6 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         list = (ListView) root.findViewById(R.id.cafe_menu);
-        //title = (TextView) root.findViewById(R.id.title);
         final ViewGroup tempcont = container;
 
         CafeAdapter adapter = new CafeAdapter
@@ -70,8 +69,9 @@ public class HomeFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(tempcont.getContext(), "press"+i, Toast.LENGTH_SHORT).show();
                 Fragment fragment = HomeDrinks.newinstance();
-                Bundle bundle = new Bundle(1);
+                Bundle bundle = new Bundle(2);
                 bundle.putString("name",name[i]);
+                bundle.putInt("image",cafe_logo[i]);
                 fragment.setArguments(bundle);
                 ((BottomNavigation)getActivity()).replaceFragment(fragment);
             }
