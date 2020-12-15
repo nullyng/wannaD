@@ -73,14 +73,14 @@ public class ReviewFragment extends Fragment {
                 "PASCUCCI",
                 "Tom N Toms"
         };
-        String[] temp ={"카페선택 부탁"};
+        String[] init ={"카페선택 부탁"};
 
         ratingBar = (RatingBar) root.findViewById(R.id.ratingbar);
         send = root.findViewById(R.id.sendReview);
         review_write = root.findViewById(R.id.writeReview);
 
         spinnerd = root.findViewById(R.id.spinnerdrink);
-        ArrayAdapter<String> adapterd = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, temp);
+        ArrayAdapter<String> adapterd = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, init);
         adapterd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerd.setAdapter(adapterd);
 
@@ -115,7 +115,7 @@ public class ReviewFragment extends Fragment {
                          if(cname.equals("Tom N Toms"))
                              drinks = getResources().getStringArray(R.array.tomntoms);
 
-                        spinnerd = ArrayAdapter.createFromResource(root.getContext(), drinks);
+                        //spinnerd = ArrayAdapter.createFromResource(getActivity(), drinks);
                      }
 
                      @Override
