@@ -31,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ReviewListFragment extends Fragment {
-    ListView list;
     TextView cName, dName;
     String ckey, dkey, context;
     RatingBar ratingBar, ratingBarAvg;
@@ -136,9 +135,12 @@ public class ReviewListFragment extends Fragment {
                 for(DataSnapshot dataSnapshot :  snapshot.getChildren()){
                     Review temp = dataSnapshot.getValue(Review.class);
                     reviewArray.add(temp);
-                    Toast.makeText(getActivity(), temp.getName(), Toast.LENGTH_SHORT).show();
+                    cnt++;
+                    ratingAvg(temp.getStar());
                 }
                 adapter.notifyDataSetChanged();
+                reviewCnt.setText(Integer.toString(cnt));
+                ratingBarAvg.setRating(avg);
             }
 
             @Override
@@ -146,5 +148,12 @@ public class ReviewListFragment extends Fragment {
 
             }
         });
+    }
+
+    public float ratingAvg(float cur){
+        sum += cur;
+        avg = sum/cnt;
+
+        return avg;
     }
 }

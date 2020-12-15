@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
                 "HOLLYS COFFE",
                 "COFFEE BEAN",
                 "PASCUCCI",
-                "Tom N Toms",
+                "Tom N Toms"
         };
 
         final int[] cafe_logo = {

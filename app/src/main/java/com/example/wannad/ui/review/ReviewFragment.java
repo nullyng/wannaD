@@ -58,10 +58,13 @@ public class ReviewFragment extends Fragment {
                 "얼그레이"
         };
         String[] cafes = {
-                "스타벅스",
-                "이디야",
-                "투썸플레이스",
-                "할리스"
+                "STARBUCKS",
+                "EDIYA",
+                "A TWOSOME PLACE",
+                "HOLLYS COFFE",
+                "COFFEE BEAN",
+                "PASCUCCI",
+                "Tom N Toms"
         };
 
         ratingBar = (RatingBar) root.findViewById(R.id.ratingbar);
