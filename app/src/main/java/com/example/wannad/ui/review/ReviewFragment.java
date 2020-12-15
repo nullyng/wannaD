@@ -99,7 +99,11 @@ public class ReviewFragment extends Fragment {
                  String ugetTime = usimpleDate.format(mDate);
 
                  //Review테이블에 값 저장
-                 temp = new Review(username,context, star,rgetTime);
+                 temp = new Review();
+                 temp.setContext(context);
+                 temp.setName(username);
+                 temp.setStar(star);
+                 temp.setTime(rgetTime);
                  Map<String, Object> postValues = temp.toMap();
                  Map<String, Object> childUpdates = new HashMap<>();
                  String random = getRandomString();

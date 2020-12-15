@@ -47,6 +47,7 @@ public class BottomNavigation extends AppCompatActivity {
         strNickname = intent.getStringExtra("name");
         strProfile = intent.getStringExtra("profile");
 
+        //초기 닉네임은 사용자 이름으로 설정
         temp = new User(strNickname, strProfile);
         Map<String, Object> postValues = temp.toMap();
         Map<String, Object> childUpdates = new HashMap<>();

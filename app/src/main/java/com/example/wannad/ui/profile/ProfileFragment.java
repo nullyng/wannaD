@@ -43,51 +43,66 @@ public class ProfileFragment extends Fragment {
     public static String name = null, profile = null;
     public static String username;
     EditText edittext;
-    public static String nickname;
+    public static String nickname = "";
+    TextView nick_btn;
+    TextView textView;
+    ImageView ivProfile;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("User");
-
+    DatabaseReference nickDatabase = FirebaseDatabase.getInstance().getReference().child("User_Nickname");
     public void read_profile(String name, String profile) {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ProfileFragment.this.name = (String) dataSnapshot.child(username).child("name").getValue();
                 ProfileFragment.this.profile = (String) dataSnapshot.child(username).child("profile").getValue();
+                textView.setText(ProfileFragment.this.name + "님, 환영합니다.");
+                Glide.with(getActivity()).load(ProfileFragment.this.profile).thumbnail(Glide.with(getActivity()).load(R.drawable.loading_profie)).into(ivProfile);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
 
-    @Override
-    //public void onStart() {
-        //super.onStart();
-        //read_profile();
-    //}
-
+    public void read_nickname() {
+        nickDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ProfileFragment.this.nickname = (String) dataSnapshot.child(username).child("nickname").getValue();
+                if(nickname == null)
+                {
+                    nickname = username;
+                    nickDatabase.child(name).child("nickname").setValue(nickname);
+                }
+                nick_btn.setText("닉네임 : " + nickname);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        final TextView textView = root.findViewById(R.id.welcome);
-        final ImageView ivProfile = root.findViewById(R.id.ivProfile);
+        textView = root.findViewById(R.id.welcome);
+        ivProfile = root.findViewById(R.id.ivProfile);
         username = ((BottomNavigation)getActivity()).strNickname;
-
-            read_profile(name, profile);
-
+        read_profile(name, profile);
+        read_nickname();
         Glide.with(this).load(profile).thumbnail(Glide.with(this).load(R.drawable.loading_profie)).into(ivProfile);
 
         textView.setText(name + "님, 환영합니다.");
 
+
         //닉네임 변경
-        TextView nick_btn = root.findViewById(R.id.nickname);
+        nick_btn = root.findViewById(R.id.nickname);
         nick_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 onClickNickname();
             }
         });
-        nick_btn.setText("닉네임 : " + nickname);
+
 
         //로그아웃 버튼
         TextView logout_btn = root.findViewById(R.id.logout);
@@ -103,8 +118,6 @@ public class ProfileFragment extends Fragment {
     }
     private void onClickNickname(){
 
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View dialogView= inflater.inflate(R.layout.dialog_member, null);
@@ -115,8 +128,10 @@ public class ProfileFragment extends Fragment {
                 .setPositiveButton("변경",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity().getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getActivity().getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
                         nickname = edittext.getText().toString();
+                        nick_btn.setText("닉네임 : " + nickname);
+                        nickDatabase.child(username).child("nickname").setValue(nickname);
                     }
                 });
         builder.setNegativeButton("취소",
