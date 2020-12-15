@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -41,12 +42,15 @@ public class ProfileFragment extends Fragment {
     TextView nick_space;
     TextView textView;
     TextView show_review;
+    String store;
+    String temp;
 
     ImageView ivProfile;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("User");
     DatabaseReference nickDatabase = FirebaseDatabase.getInstance().getReference().child("User_Nickname");
     private DatabaseReference databaseReference;
 
+    //DB에서 프로필 정보 읽어오기
     public void read_profile(String name, String profile) {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -62,6 +66,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    //DB에서 닉네임 정보 읽어오기
     public void read_nickname() {
         nickDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,25 +85,6 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    /*private ValueEventListener checkRegister = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            //Toast.makeText(getActivity().getApplicationContext(), "닉네임 검사", Toast.LENGTH_LONG).show();
-            Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
-            while (child.hasNext()) {
-                if (edittext.getText().toString().equals(child.next().getKey())) {
-                    Toast.makeText(getActivity().getApplicationContext(), "존재하는 닉네임 입니다.", Toast.LENGTH_LONG).show();
-                    databaseReference.removeEventListener(this);
-                    return;
-                }
-            }
-            //onClickNickname();
-        }
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-        }
-    };*/
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
@@ -106,6 +92,7 @@ public class ProfileFragment extends Fragment {
         ivProfile = root.findViewById(R.id.ivProfile);
         username = ((BottomNavigation)getActivity()).strNickname;
 
+        //profile 정보 읽어서 출력하기
         read_profile(name, profile);
         read_nickname();
         Glide.with(this).load(profile).thumbnail(Glide.with(this).load(R.drawable.loading_profie)).into(ivProfile);
@@ -160,14 +147,37 @@ public class ProfileFragment extends Fragment {
                 .setPositiveButton("변경",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //Toast.makeText(getActivity().getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
                         nickname = edittext.getText().toString();
 
-                        //닉네임 중복 검사하는 코드
-                        //databaseReference.addListenerForSingleValueEvent(checkRegister);
+                        nickDatabase.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for(DataSnapshot dataSnapshot :  snapshot.getChildren()){
+                                    temp = dataSnapshot.getValue().toString();
+                                    store = "{nickname=" +nickname+"}";
 
-                        nick_space.setText("닉네임 : " + nickname);
-                        nickDatabase.child(username).child("nickname").setValue(nickname);
+                                    //닉네임 중복 검사
+                                    if(temp.equals(store)) {
+                                        Toast.makeText(getActivity().getApplicationContext(), "존재하는 닉네임 입니다.", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    }
+                                    else {
+                                        nick_space.setText("닉네임 : " + nickname);
+                                        nickDatabase.child(username).child("nickname").setValue(nickname);
+                                        break;
+                                    }
+                                }
+                                //중복되는 닉네임을 찾았으면 dialog 다시 띄워주기
+                                if(temp.equals(store)) {
+                                    onClickNickname();
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
                     }
                 });
         builder.setNegativeButton("취소",

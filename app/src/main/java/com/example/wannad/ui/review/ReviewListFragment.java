@@ -2,13 +2,9 @@ package com.example.wannad.ui.review;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Trace;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wannad.R;
 import com.example.wannad.Review;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,6 +52,7 @@ public class ReviewListFragment extends Fragment {
 
         cName = root.findViewById(R.id.review_cafe);
         dName = root.findViewById(R.id.review_drink);
+        ckey = getArguments().getString("cname");
         ckey = getArguments().getString("cname");
         dkey = getArguments().getString("dname");
         ratingBar = root.findViewById(R.id.reviewRating);
