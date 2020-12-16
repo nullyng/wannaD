@@ -44,8 +44,6 @@ public class ProfileFragment extends Fragment {
     TextView show_review;
     String store;
     String temp;
-    int flag = 0;
-    AlertDialog ad;
 
     ImageView ivProfile;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("User");
@@ -140,7 +138,6 @@ public class ProfileFragment extends Fragment {
     private void onClickNickname(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        ad = builder.create();
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View dialogView= inflater.inflate(R.layout.dialog_member, null);
         edittext = (EditText)dialogView.findViewById(R.id.nickname_edit);
@@ -148,7 +145,6 @@ public class ProfileFragment extends Fragment {
         builder.setMessage("변경할 닉네임을 입력해주세요");
         builder.setView(dialogView)
                 .setPositiveButton("변경",
-<<<<<<< HEAD
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 nickname = edittext.getText().toString();
@@ -175,53 +171,15 @@ public class ProfileFragment extends Fragment {
                                         if(temp.equals(store)) {
                                             onClickNickname();
                                         }
-=======
-                new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, int which) {
-                        nickname = edittext.getText().toString();
-                        store = "{nickname=" +nickname+"}";
-                        flag = 0;
-                        nickDatabase.addValueEventListener(new ValueEventListener() {
-
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for(DataSnapshot dataSnapshot :  snapshot.getChildren()){
-                                    temp = dataSnapshot.getValue().toString();
-                                    store = "{nickname=" +nickname+"}";
-
-                                    //닉네임 중복 검사
-                                    if(temp.equals(store)) {
-                                        Toast.makeText(getActivity().getApplicationContext(), "존재하는 닉네임 입니다.", Toast.LENGTH_SHORT).show();
-                                        break;
->>>>>>> 8e1261cf899cfae0532d667bb04108481ac13baa
                                     }
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
 
                                     }
-<<<<<<< HEAD
                                 });
 
                             }
                         });
-=======
-                                }
-                                //중복되는 닉네임을 찾았으면 dialog 다시 띄워주기
-                                if(temp.equals(store)) {
-                                    onClickNickname();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                    }
-
-                });
->>>>>>> 8e1261cf899cfae0532d667bb04108481ac13baa
         builder.setNegativeButton("취소",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -229,9 +187,6 @@ public class ProfileFragment extends Fragment {
                     }
                 });
         builder.show();
-
-
-
 
     }
     private void onClickLogout() {
