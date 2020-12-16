@@ -44,6 +44,8 @@ public class ProfileFragment extends Fragment {
     TextView show_review;
     String store;
     String temp;
+    int flag = 0;
+    AlertDialog ad;
 
     ImageView ivProfile;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("User");
@@ -138,6 +140,7 @@ public class ProfileFragment extends Fragment {
     private void onClickNickname(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        ad = builder.create();
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View dialogView= inflater.inflate(R.layout.dialog_member, null);
         edittext = (EditText)dialogView.findViewById(R.id.nickname_edit);
@@ -146,10 +149,12 @@ public class ProfileFragment extends Fragment {
         builder.setView(dialogView)
                 .setPositiveButton("변경",
                 new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, int which) {
                         nickname = edittext.getText().toString();
-
+                        store = "{nickname=" +nickname+"}";
+                        flag = 0;
                         nickDatabase.addValueEventListener(new ValueEventListener() {
+
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for(DataSnapshot dataSnapshot :  snapshot.getChildren()){
@@ -172,6 +177,7 @@ public class ProfileFragment extends Fragment {
                                     onClickNickname();
                                 }
                             }
+
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -179,6 +185,7 @@ public class ProfileFragment extends Fragment {
                         });
 
                     }
+
                 });
         builder.setNegativeButton("취소",
                 new DialogInterface.OnClickListener() {
@@ -187,6 +194,9 @@ public class ProfileFragment extends Fragment {
                     }
                 });
         builder.show();
+
+
+
 
     }
     private void onClickLogout() {
