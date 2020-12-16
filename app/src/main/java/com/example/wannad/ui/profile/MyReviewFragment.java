@@ -173,7 +173,7 @@ public class MyReviewFragment extends Fragment {
 
     public void myreview_read(){
         DatabaseReference childreference = mDatabase.child("User_Review").child(username);
-
+        cnt = 0;
         childreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
