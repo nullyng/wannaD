@@ -8,15 +8,6 @@ public class Myreview {
     float star;
     String context;
     String time;
-    Uri img;
-
-    public void setImg(Uri img) {
-        this.img = img;
-    }
-
-    public Uri getImg() {
-        return img;
-    }
 
     public Myreview() {  }
 

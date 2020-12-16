@@ -42,7 +42,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="후기 평점"
+                android:text="평점"
                 android:textSize="16dp"
                 android:layout_gravity="center"
                 android:gravity="center"/>
@@ -55,6 +55,15 @@
                 android:layout_gravity="center"
                 android:isIndicator="true"
                 android:rating="0"/>
+            <TextView
+                android:id="@+id/numavg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:text="0.00"
+                android:textSize="16dp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
             <TextView
                 android:id="@+id/leftcover"
                 android:layout_width="wrap_content"

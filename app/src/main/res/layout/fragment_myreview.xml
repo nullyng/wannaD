@@ -69,7 +69,7 @@
                 android:paddingHorizontal="10dp"
                 android:text="★"
                 android:textSize="17sp"
-                android:textColor="#FFC107"
+                android:textColor="#feee7d"
                 />
             <TextView
                 android:id="@+id/star4"

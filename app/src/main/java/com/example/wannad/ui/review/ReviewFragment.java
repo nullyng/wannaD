@@ -4,6 +4,10 @@ package com.example.wannad.ui.review;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.loader.content.CursorLoader;
 
 import com.bumptech.glide.Glide;
 import com.example.wannad.BottomNavigation;
@@ -35,7 +40,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,22 +53,17 @@ import java.util.Random;
 public class ReviewFragment extends Fragment {
     Spinner spinnerd, spinnerc;
     RatingBar ratingBar;
-    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     String cname, dname, context, username;
     public static String nickName;
     TextView review_write;
     Button send;
-    ImageView review_img;
     Review temp;
     User_Review temp2;
     long time;
     ArrayAdapter<CharSequence> adapterc, adapterd;
-    String[] drinks;
 
-    Button imagebtn;
-    String image = "null";
-    int REQUEST_IMAGE_CODE = 1001;
-    int REQUEST_EXTERNAL_STORAGE_PERMISSIOM=1002;
+    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
     public void read_nickname(String nickname) {
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -87,14 +90,14 @@ public class ReviewFragment extends Fragment {
                 "PASCUCCI",
                 "Tom N Toms"
         };
-        String[] init ={"카페선택 부탁"};
 
         ratingBar = (RatingBar) root.findViewById(R.id.ratingbar);
         send = root.findViewById(R.id.sendReview);
         review_write = root.findViewById(R.id.writeReview);
-        imagebtn = root.findViewById(R.id.picturePick);
-        review_img = root.findViewById(R.id.review_picture);
-        review_img.setVisibility(View.GONE);
+
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(Color.parseColor("#feee7d"), PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(1).setColorFilter(Color.parseColor("#feee7d"), PorterDuff.Mode.SRC_ATOP);
 
         spinnerd = root.findViewById(R.id.spinnerdrink);
         //adapterd = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, init);
@@ -259,7 +262,7 @@ public class ReviewFragment extends Fragment {
                  time = System.currentTimeMillis();
                  Date mDate = new Date(time);
                  SimpleDateFormat rsimpleDate = new SimpleDateFormat("yyyy.MM.dd");
-                 SimpleDateFormat usimpleDate = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+                 SimpleDateFormat usimpleDate = new SimpleDateFormat("yyyyMMddhhmmss");
                  String rgetTime = rsimpleDate.format(mDate);
                  String ugetTime = usimpleDate.format(mDate);
 
@@ -269,18 +272,17 @@ public class ReviewFragment extends Fragment {
                  temp.setNickname(nickName);
                  temp.setStar(star);
                  temp.setTime(rgetTime);
-                 temp.setImg(image);
                  Map<String, Object> postValues = temp.toMap();
                  Map<String, Object> childUpdates = new HashMap<>();
                  String random = getRandomString();
-                 childUpdates.put("/Review/"+cname+"/"+dname+"/review"+random,postValues);
+                 childUpdates.put("/Review/"+cname+"/"+dname+"/review"+ugetTime,postValues);
                  mDatabase.updateChildren(childUpdates);
 
                  //User테이블에 review 정보 저장
-                 temp2 = new User_Review(cname, dname, context, star, rgetTime,image);
+                 temp2 = new User_Review(cname, dname, context, star, rgetTime);
                  Map<String, Object> postValues2 = temp2.toMap();
                  Map<String, Object> childUpdates2 = new HashMap<>();
-                 childUpdates2.put("/User_Review/" +username+"/review"+random,postValues2);
+                 childUpdates2.put("/User_Review/" +username+"/review"+ugetTime,postValues2);
                  mDatabase.updateChildren(childUpdates2);
 
                 review_write.setText("");
@@ -298,66 +300,7 @@ public class ReviewFragment extends Fragment {
             }
         });
 
-        if (ContextCompat.checkSelfPermission(
-                getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                PackageManager.PERMISSION_GRANTED) {
-
-        }  else {
-            // You can directly ask for the permission.
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }
-                    ,REQUEST_EXTERNAL_STORAGE_PERMISSIOM);
-        }
-        //사진추가 눌렀을때
-        imagebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent in = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(in,REQUEST_IMAGE_CODE);
-            }
-        });
-
-         //갤러리 권한 요청
-        if (ContextCompat.checkSelfPermission(
-                getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                PackageManager.PERMISSION_GRANTED) {
-
-        }  else {
-            // You can directly ask for the permission.
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }
-                    ,REQUEST_EXTERNAL_STORAGE_PERMISSIOM);
-        }
-
-         //사진추가 눌렀을때
-        imagebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent in = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(in,REQUEST_IMAGE_CODE);
-            }
-        });
-
         return root;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    //갤러리 부를 시 필요한 함수
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_IMAGE_CODE){
-            imagebtn.setText("사진변경");
-            review_img.setVisibility(View.VISIBLE);
-
-            image = (data.getData()).toString();
-            Glide.with(this).load(Uri.parse(image)).into(review_img);
-
-        }
     }
 
 

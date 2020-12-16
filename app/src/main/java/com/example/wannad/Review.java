@@ -12,7 +12,7 @@ public class Review {
     String context;
     float star;
     String time;
-    String img;
+
 
     public Review(){ }
 
@@ -32,9 +32,6 @@ public class Review {
         this.time = time;
     }
 
-    public void setImg(String img) {
-        this.img = img;
-    }
 
     @Exclude
     public Map<String, Object> toMap(){
@@ -43,7 +40,6 @@ public class Review {
         result.put("star",star);
         result.put("context",context);
         result.put("time",time);
-        result.put("image",img);
         return result;
     }
 
@@ -61,7 +57,4 @@ public class Review {
         return star;
     }
 
-    public String getImg() {
-        return img;
-    }
 }

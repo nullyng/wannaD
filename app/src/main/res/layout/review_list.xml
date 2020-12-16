@@ -60,16 +60,6 @@
                 android:text="리뷰내용"
                 android:textSize="15sp"/>
 
-            <ImageView
-                android:id="@+id/review_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.95"
-                android:layout_marginHorizontal="10dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <View

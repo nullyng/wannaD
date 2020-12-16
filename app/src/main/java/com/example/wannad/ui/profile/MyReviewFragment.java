@@ -1,6 +1,9 @@
 package com.example.wannad.ui.profile;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,7 +37,10 @@ public class MyReviewFragment extends Fragment {
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     ArrayList<Myreview> myreviewArray;
     TextView review_cnt;
+    TextView title;
+    RatingBar ratingBar;
     TextView star0, star1,star2,star3,star4;
+
     private String username;
     private int cnt;
     private RecyclerView recyclerView;
@@ -54,6 +60,7 @@ public class MyReviewFragment extends Fragment {
         myreviewArray = new ArrayList<>();
 
         review_cnt = root.findViewById(R.id.myreviewCnt);
+
         username = getArguments().getString("username");
         myreview_read();
 
@@ -63,6 +70,7 @@ public class MyReviewFragment extends Fragment {
         star2 = root.findViewById(R.id.star2);
         star3 = root.findViewById(R.id.star3);
         star4 = root.findViewById(R.id.star4);
+        title = root.findViewById(R.id.myreview_title);
 
         star0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +103,13 @@ public class MyReviewFragment extends Fragment {
             }
         });
 
+        title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myreview_read();
+            }
+        });
+
         adapter = new MyReviewAdapter(getActivity(), myreviewArray);
         recyclerView.setAdapter(adapter);
 
@@ -120,12 +135,11 @@ public class MyReviewFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-            holder.rv_cname.setText(myreviewArray.get(position).getCname());
-            holder.rv_dname.setText(myreviewArray.get(position).getDname());
-            holder.time.setText(myreviewArray.get(position).getTime());
-            holder.rv_context.setText(myreviewArray.get(position).getContext());
-            holder.star.setRating(myreviewArray.get(position).getStar());
-            Glide.with(holder.itemView).load(myreviewArray.get(position).getImg()).into(holder.rv_img);
+            holder.rv_cname.setText(myreviewArray.get(myreviewArray.size()-(position+1)).getCname());
+            holder.rv_dname.setText(myreviewArray.get(myreviewArray.size()-(position+1)).getDname());
+            holder.time.setText(myreviewArray.get(myreviewArray.size()-(position+1)).getTime());
+            holder.rv_context.setText(myreviewArray.get(myreviewArray.size()-(position+1)).getContext());
+            holder.star.setRating(myreviewArray.get(myreviewArray.size()-(position+1)).getStar());
         }
 
         @Override
@@ -140,16 +154,19 @@ public class MyReviewFragment extends Fragment {
             TextView time;
             TextView rv_context;
             RatingBar star;
-            ImageView rv_img;
 
             public CustomViewHolder(@NonNull View itemView) {
                 super(itemView);
-                this.rv_context = itemView.findViewById(R.id.review_context);
+                this.rv_context = itemView.findViewById(R.id.myreview_context);
                 this.rv_cname = itemView.findViewById(R.id.myreview_cname);
                 this.rv_dname = itemView.findViewById(R.id.myreview_dname);
                 this.time = itemView.findViewById(R.id.myreview_time);
                 this.star = itemView.findViewById(R.id.reviewRating);
-                this.rv_img = itemView.findViewById(R.id.myreview_image);
+
+                LayerDrawable stars = (LayerDrawable) star.getProgressDrawable();
+                stars.getDrawable(2).setColorFilter(Color.parseColor("#feee7d"), PorterDuff.Mode.SRC_ATOP);
+                stars.getDrawable(1).setColorFilter(Color.parseColor("#feee7d"), PorterDuff.Mode.SRC_ATOP);
+
             }
         }
     }
