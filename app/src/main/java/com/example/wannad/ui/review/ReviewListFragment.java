@@ -1,10 +1,15 @@
 package com.example.wannad.ui.review;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,19 +20,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.wannad.R;
 import com.example.wannad.Review;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
 public class ReviewListFragment extends Fragment {
-    TextView cName, dName;
-    String ckey, dkey, context;
+    TextView cName, dName, numAvg;
+    String ckey, dkey;
     RatingBar ratingBar, ratingBarAvg;
     ArrayList<Review> reviewArray;
     TextView reviewCnt;
@@ -58,6 +67,12 @@ public class ReviewListFragment extends Fragment {
         ratingBar = root.findViewById(R.id.reviewRating);
         reviewCnt = root.findViewById(R.id.reviewCnt);
         ratingBarAvg = root.findViewById(R.id.reviewRatingAvg);
+        numAvg = root.findViewById(R.id.numavg);
+
+
+        LayerDrawable star = (LayerDrawable) ratingBarAvg.getProgressDrawable();
+        star.getDrawable(2).setColorFilter(Color.parseColor("#feee7d"), PorterDuff.Mode.SRC_ATOP);
+        star.getDrawable(1).setColorFilter(Color.parseColor("#feee7d"), PorterDuff.Mode.SRC_ATOP);
 
         cName.setText(ckey);
         dName.setText(dkey);
@@ -88,11 +103,11 @@ public class ReviewListFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-            holder.rv_name.setText(reviewArray.get(position).getNickname());
-            holder.rv_context.setText(reviewArray.get(position).getContext());
-            holder.star.setRating(reviewArray.get(position).getStar());
-            holder.rv_time.setText(reviewArray.get(position).getTime());
+        public void onBindViewHolder(@NonNull final CustomViewHolder holder, final int position) {
+            holder.rv_name.setText(reviewArray.get(reviewArray.size()-(position+1)).getNickname());
+            holder.rv_context.setText(reviewArray.get(reviewArray.size()-(position+1)).getContext());
+            holder.star.setRating(reviewArray.get(reviewArray.size()-(position+1)).getStar());
+            holder.rv_time.setText(reviewArray.get(reviewArray.size()-(position+1)).getTime());
         }
 
         @Override
@@ -113,6 +128,10 @@ public class ReviewListFragment extends Fragment {
                 this.rv_time = itemView.findViewById(R.id.review_time);
                 this.rv_name = itemView.findViewById(R.id.review_name);
                 this.star = itemView.findViewById(R.id.reviewRating);
+
+                LayerDrawable stars = (LayerDrawable) star.getProgressDrawable();
+                stars.getDrawable(2).setColorFilter(Color.parseColor("#feee7d"), PorterDuff.Mode.SRC_ATOP);
+                stars.getDrawable(1).setColorFilter(Color.parseColor("#feee7d"), PorterDuff.Mode.SRC_ATOP);
             }
         }
     }
@@ -139,6 +158,7 @@ public class ReviewListFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 reviewCnt.setText(Integer.toString(cnt));
                 ratingBarAvg.setRating(avg);
+                numAvg.setText(""+avg);
             }
 
             @Override

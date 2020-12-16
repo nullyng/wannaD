@@ -1,5 +1,7 @@
 package com.example.wannad;
 
+import android.net.Uri;
+
 public class Myreview {
     String cname;
     String dname;

@@ -1,5 +1,7 @@
 package com.example.wannad;
 
+import android.net.Uri;
+
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
@@ -11,6 +13,7 @@ public class User_Review {
     String context;
     float star;
     String time;
+
 
     public User_Review(String cname, String dname, String context, float star, String time){
         this.cname = cname;

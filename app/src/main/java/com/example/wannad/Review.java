@@ -11,6 +11,7 @@ public class Review {
     float star;
     String time;
 
+
     public Review(){ }
 
     public void setNickname(String nickname) {
@@ -28,6 +29,7 @@ public class Review {
     public void setTime(String time) {
         this.time = time;
     }
+
 
     @Exclude
     public Map<String, Object> toMap(){
@@ -52,4 +54,5 @@ public class Review {
     public float getStar(){
         return star;
     }
+
 }
