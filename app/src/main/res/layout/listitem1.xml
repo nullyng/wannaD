@@ -12,6 +12,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:adjustViewBounds="true"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="14dp"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
