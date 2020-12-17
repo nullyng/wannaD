@@ -69,11 +69,4 @@ public class BottomNavigation extends AppCompatActivity {
         fragmentTransaction.add(R.id.nav_host_fragment,fragment).commit();
     }
 
-    public void replacePopFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.replace(R.id.nav_host_fragment,fragment).commit();
-    }
 }

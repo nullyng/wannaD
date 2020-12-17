@@ -274,7 +274,6 @@ public class ReviewFragment extends Fragment {
                  temp.setTime(rgetTime);
                  Map<String, Object> postValues = temp.toMap();
                  Map<String, Object> childUpdates = new HashMap<>();
-                 String random = getRandomString();
                  childUpdates.put("/Review/"+cname+"/"+dname+"/review"+ugetTime,postValues);
                  mDatabase.updateChildren(childUpdates);
 
@@ -301,21 +300,6 @@ public class ReviewFragment extends Fragment {
         });
 
         return root;
-    }
-
-
-    private static String getRandomString() {
-        int length = 10;
-        StringBuffer buffer = new StringBuffer();
-        Random random = new Random();
-
-        String chars[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-                "1","2","3","4","5","6","7","8","9","0"};
-
-        for (int i = 0; i < length; i++) {
-            buffer.append(chars[random.nextInt(chars.length)]);
-        }
-        return buffer.toString();
     }
 
 
