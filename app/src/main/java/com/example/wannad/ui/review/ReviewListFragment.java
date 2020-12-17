@@ -158,7 +158,7 @@ public class ReviewListFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 reviewCnt.setText(Integer.toString(cnt));
                 ratingBarAvg.setRating(avg);
-                numAvg.setText(""+avg);
+                numAvg.setText(String.format("%.2f",avg));
             }
 
             @Override
