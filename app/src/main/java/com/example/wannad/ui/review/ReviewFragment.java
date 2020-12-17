@@ -262,7 +262,7 @@ public class ReviewFragment extends Fragment {
                  time = System.currentTimeMillis();
                  Date mDate = new Date(time);
                  SimpleDateFormat rsimpleDate = new SimpleDateFormat("yyyy.MM.dd");
-                 SimpleDateFormat usimpleDate = new SimpleDateFormat("yyyyMMddhhmmss");
+                 SimpleDateFormat usimpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
                  String rgetTime = rsimpleDate.format(mDate);
                  String ugetTime = usimpleDate.format(mDate);
 
